@@ -202,8 +202,8 @@ class CPVGenerator2026:
         print(f"   GO souhaité: {go_value}")
         print(f"   Statut CEE: {cee_status}")
 
-        # DEBUG: Écrire le XML dans un fichier
-        debug_file = "/Users/strategyglobal/Desktop/cpv mint/cpv_app/debug_xml.txt"
+        # DEBUG: Écrire le XML dans un fichier (chemin relatif)
+        debug_file = os.path.join(os.path.dirname(__file__), 'debug_xml.txt')
         with open(debug_file, 'w', encoding='utf-8') as f:
             f.write("=" * 80 + "\n")
             f.write("DEBUG: Recherche des paragraphes contenant 'Soumis'\n")

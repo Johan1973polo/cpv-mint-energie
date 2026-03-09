@@ -804,8 +804,8 @@ def extract_all_pdfs(folder_path):
 
 
 if __name__ == "__main__":
-    # Test
-    test_folder = "/Users/strategyglobal/Desktop/cpv mint"
+    # Test avec chemin relatif
+    test_folder = os.path.join(os.path.dirname(__file__), '..')
     data = extract_all_pdfs(test_folder)
 
     print("\n" + "="*60)
