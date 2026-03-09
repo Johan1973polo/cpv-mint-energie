@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Utilisateur - Guide CPV MINT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4CAF50 0%, #2D1B69 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: white;
+            color: #2D1B69;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            margin-bottom: 30px;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            background: #4CAF50;
+            color: white;
+        }
+
+        .steps-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .step {
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .step:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #4CAF50, #2D1B69);
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .step-title {
+            font-size: 1.3em;
+            color: #2D1B69;
+            font-weight: bold;
+            flex: 1;
+        }
+
+        .step-image {
+            width: 100%;
+            max-width: 100%;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+            cursor: zoom-in;
+        }
+
+        .step-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+            border-color: #4CAF50;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .step-number {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2em;
+            }
+
+            .step-title {
+                font-size: 1.1em;
+            }
+
+            .steps-container {
+                padding: 20px;
+            }
+        }
+
+        /* Image zoom modal */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            cursor: zoom-out;
+        }
+
+        .image-modal img {
+            margin: auto;
+            display: block;
+            max-width: 95%;
+            max-height: 95%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Process Utilisateur — Guide pas à pas</h1>
+            <p>Suivez ces étapes pour générer un CPV MINT Énergie</p>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="/" class="back-button">← Retour à l'application</a>
+        </div>
+
+        <div class="steps-container">
+            {% if images %}
+                {% for image in images %}
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">{{ loop.index }}</div>
+                        <div class="step-title">
+                            {% if image.startswith('2 ') %}
+                                Les informations se remplissent automatiquement
+                            {% elif image.startswith('3 ') %}
+                                Mettre la date de début et de fin
+                            {% elif image.startswith('4 ') %}
+                                Reporter les volumes de consommation Enedis
+                            {% elif image.startswith('6 ') %}
+                                Renseigner l'IBAN et options CEE/GO
+                            {% elif 'PAPPERS' in image.upper() and not 'CHARGÉ' in image.upper() %}
+                                Pappers - Recherche automatique
+                            {% elif 'CHARGÉ PAPPERS' in image.upper() %}
+                                Données Pappers et RGPD chargées
+                            {% elif 'CHOISIR FTA' in image.upper() %}
+                                Choisir la FTA en fonction du profil
+                            {% elif 'PDF OU DOCS' in image.upper() %}
+                                Choisir le format de sortie (PDF ou DOCX)
+                            {% elif 'CLACULER' in image.upper() or 'CALCULER' in image.upper() %}
+                                Calculer les prix
+                            {% elif 'COMMENCER' in image.upper() %}
+                                Cliquer sur Commencer
+                            {% elif 'FICHIER UTILE' in image.upper() %}
+                                Fichiers générés et utiles
+                            {% elif 'GNERERE' in image.upper() or 'GENERER' in image.upper() %}
+                                Générer votre CPV
+                            {% elif 'METTRE LA FEUILLE EXCEL' in image.upper() %}
+                                Charger la feuille Excel de grille tarifaire
+                            {% elif 'SCORE CLIENT' in image.upper() %}
+                                Saisir le score client Ellipro
+                            {% else %}
+                                {{ image.replace('.png', '').replace('.PNG', '') }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <img src="/process_images/{{ image }}"
+                         alt="Étape {{ loop.index }}"
+                         class="step-image"
+                         onclick="openModal(this.src)">
+                </div>
+                {% endfor %}
+            {% else %}
+                <p style="text-align: center; color: #999; font-size: 1.2em;">
+                    Aucune image de processus disponible.
+                </p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Modal pour zoom d'image -->
+    <div id="imageModal" class="image-modal" onclick="closeModal()">
+        <img id="modalImage" src="" alt="Image agrandie">
+    </div>
+
+    <script>
+        function openModal(src) {
+            document.getElementById('imageModal').style.display = 'block';
+            document.getElementById('modalImage').src = src;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Fermer le modal avec la touche Echap
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

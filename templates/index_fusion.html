@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPV MINT ÉNERGIE 2026 - Générateur Intelligent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4CAF50 0%, #2D1B69 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .user-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 12px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        .user-banner .user-info {
+            color: #2d1b69;
+            font-weight: 600;
+        }
+
+        .user-banner a {
+            color: #2d1b69;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .user-banner a:hover {
+            color: #4CAF50;
+        }
+
+        .user-banner .separator {
+            color: #ccc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        .header .version {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .help-button {
+            display: inline-block;
+            background: white;
+            color: #2D1B69;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1em;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .help-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: #4CAF50;
+            color: white;
+        }
+
+        .workflows {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .workflow-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .workflow-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4CAF50, #2D1B69);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .workflow-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .workflow-card:hover::before {
+            opacity: 1;
+        }
+
+        .workflow-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .workflow-card.workflow-1 .workflow-icon { color: #4CAF50; }
+        .workflow-card.workflow-2 .workflow-icon { color: #2D1B69; }
+        .workflow-card.workflow-3 .workflow-icon { color: #FF6B6B; }
+
+        .workflow-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .workflow-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .workflow-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .workflow-features li {
+            padding: 8px 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+        }
+
+        .workflow-features li::before {
+            content: '✓';
+            color: #4CAF50;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .btn-select {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #2D1B69, #5a3d9e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-select:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .workflow-card.workflow-2 .btn-select {
+            background: linear-gradient(135deg, #2D1B69, #1a0f3d);
+        }
+
+        .workflow-card.workflow-3 .btn-select {
+            background: linear-gradient(135deg, #2D1B69, #5a3d9e);
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .info-section h3 {
+            color: #2D1B69;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .info-item strong {
+            color: #2D1B69;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .info-item span {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 768px) {
+            .workflows {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header .subtitle {
+                font-size: 1.1em;
+            }
+        }
+
+        /* Modal pour le workflow sélectionné */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            width: 90%;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 2em;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .upload-zone {
+            border: 3px dashed #4CAF50;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 15px 0;
+            min-height: auto;
+            position: relative;
+        }
+
+        .upload-zone:hover {
+            background: #e8f5e9;
+            border-color: #2D1B69;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+        }
+
+        .upload-zone.dragover {
+            background: #c8e6c9;
+            border-color: #2D1B69;
+            border-style: solid;
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(76, 175, 80, 0.4);
+        }
+
+        .upload-zone.dragover::before {
+            content: "✓ Déposer les fichiers ici";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2D1B69;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 8px;
+            z-index: 10;
+        }
+
+        .file-list {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .file-item {
+            background: #ffffff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e0e0e0;
+            transition: all 0.2s ease;
+            animation: slideIn 0.3s ease;
+        }
+
+        .file-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-color: #4CAF50;
+        }
+
+        .file-item .remove-file {
+            color: #f44336;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .file-item .remove-file:hover {
+            background: rgba(244, 67, 54, 0.1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #2D1B69, #5a3d9e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4CAF50;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- User Banner -->
+    <div class="user-banner">
+        <span class="user-info">👤 {{ current_user.nom }}{% if current_user.is_admin %} (Admin){% endif %}</span>
+        {% if current_user.is_admin %}
+            <span class="separator">|</span>
+            <a href="{{ url_for('admin') }}">👥 Gestion utilisateurs</a>
+        {% endif %}
+        <span class="separator">|</span>
+        <a href="{{ url_for('logout') }}">🚪 Déconnexion</a>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📄 CPV MINT ÉNERGIE</h1>
+            <div class="subtitle">Générateur de Conditions Particulières de Vente</div>
+            <div class="version">Version 2026 • Fusion PDF + Excel</div>
+            <br>
+            <a href="/process" class="help-button" target="_blank">📖 Guide d'utilisation</a>
+        </div>
+
+        <div class="workflows">
+            <!-- Workflow Hybride PDFs + Excel -->
+            <div class="workflow-card workflow-3" onclick="selectWorkflow(3)">
+                <div class="workflow-icon">🚀</div>
+                <h2 class="workflow-title">Génération Contrat MINT</h2>
+                <p class="workflow-description">
+                    PDFs + Grille Excel
+                </p>
+                <ul class="workflow-features">
+                    <li>Extraction automatique</li>
+                    <li>Prix P0 à jour</li>
+                    <li>Validation complète</li>
+                </ul>
+                <button class="btn-select">Commencer</button>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3>📝 Informations importantes</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Score minimum</strong>
+                    <span>≥ 5/10 obligatoire</span>
+                </div>
+                <div class="info-item">
+                    <strong>CAR minimum</strong>
+                    <span>30 MWh</span>
+                </div>
+                <div class="info-item">
+                    <strong>CAR maximum</strong>
+                    <span>≤ 300 MWh (grille standard)</span>
+                </div>
+                <div class="info-item">
+                    <strong>Marge courtier</strong>
+                    <span>6 à 25 €/MWh</span>
+                </div>
+                <div class="info-item">
+                    <strong>Durée minimale</strong>
+                    <span>12 mois minimum</span>
+                </div>
+                <div class="info-item">
+                    <strong>Exclusions NAF</strong>
+                    <span>8610Z, 8710Z (santé)</span>
+                </div>
+                <div class="info-item">
+                    <strong>Exclusions zones</strong>
+                    <span>ELD, Corse, DOM-TOM</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Workflow 1: PDFs -->
+    <div id="modal-workflow-1" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal(1)">&times;</span>
+            <h2>📋 Upload des PDFs</h2>
+            <p style="color: #666; margin: 15px 0;">Uploadez vos documents PDF (Fiche Contact + RGPD + SIREN) :</p>
+            <p style="color: #4CAF50; margin: 5px 0; font-size: 0.9em;">💡 Sélection multiple activée : Ctrl+Clic (Windows) ou Cmd+Clic (Mac)</p>
+
+            <form id="form-pdfs" enctype="multipart/form-data">
+                <div class="upload-zone" id="drop-zone-1">
+                    <div style="font-size: 3em; margin-bottom: 15px;">📄</div>
+                    <div>Glissez-déposez vos PDFs ici (plusieurs fichiers)</div>
+                    <div style="margin: 10px 0; color: #999;">ou</div>
+                    <input type="file" id="file-input-1" multiple accept=".pdf" style="display: none;">
+                    <button type="button" onclick="document.getElementById('file-input-1').click()" style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                        Sélectionner plusieurs PDFs
+                    </button>
+                </div>
+
+                <div class="file-list" id="file-list-1"></div>
+
+                <div class="loading" id="loading-1">
+                    <div class="spinner"></div>
+                    <div>Extraction en cours...</div>
+                </div>
+
+                <button type="submit" class="btn-submit" id="btn-submit-1" disabled>
+                    Analyser et continuer
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Workflow 2: Excel -->
+    <div id="modal-workflow-2" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal(2)">&times;</span>
+            <h2>📊 Upload de la grille Excel</h2>
+            <p style="color: #666; margin: 15px 0;">Chargez la grille tarifaire MINT du jour (fichier .xlsx avec 3 onglets) :</p>
+
+            <form id="form-excel" enctype="multipart/form-data">
+                <div class="upload-zone" id="drop-zone-2">
+                    <div style="font-size: 3em; margin-bottom: 15px;">📊</div>
+                    <div>Glissez-déposez le fichier Excel ici</div>
+                    <div style="margin: 10px 0; color: #999;">ou</div>
+                    <input type="file" id="file-input-2" accept=".xlsx,.xlsm" style="display: none;">
+                    <button type="button" onclick="document.getElementById('file-input-2').click()" style="padding: 10px 20px; background: #2D1B69; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                        Parcourir les fichiers
+                    </button>
+                </div>
+
+                <div class="file-list" id="file-list-2"></div>
+
+                <div class="loading" id="loading-2">
+                    <div class="spinner"></div>
+                    <div>Chargement de la grille...</div>
+                </div>
+
+                <button type="submit" class="btn-submit" id="btn-submit-2" disabled>
+                    Charger et continuer
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Workflow 3: Hybride -->
+    <div id="modal-workflow-3" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal(3)">&times;</span>
+            <h2>🚀 Upload PDFs + Excel</h2>
+            <p style="color: #666; margin: 15px 0;">Chargez vos PDFs ET la grille Excel pour une génération optimale :</p>
+            <p style="color: #4CAF50; margin: 5px 0 15px; font-size: 0.9em;">💡 PDFs : sélection multiple activée (Ctrl+Clic ou Cmd+Clic)</p>
+
+            <form id="form-hybride" enctype="multipart/form-data">
+                <h3 style="margin: 20px 0 10px; color: #2D1B69;">1️⃣ Grille Excel MINT</h3>
+                <div class="upload-zone" id="drop-zone-3-excel">
+                    <div style="font-size: 2em; margin-bottom: 10px;">📊</div>
+                    <div>Grille tarifaire (.xlsx)</div>
+                    <input type="file" id="file-input-3-excel" accept=".xlsx,.xlsm" style="display: none;">
+                    <button type="button" onclick="document.getElementById('file-input-3-excel').click()" style="padding: 8px 16px; margin-top: 10px; background: #2D1B69; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                        Choisir
+                    </button>
+                </div>
+                <div class="file-list" id="file-list-3-excel"></div>
+
+                <h3 style="margin: 20px 0 10px; color: #4CAF50;">2️⃣ Documents PDFs client</h3>
+                <div class="upload-zone" id="drop-zone-3-pdfs">
+                    <div style="font-size: 2em; margin-bottom: 10px;">📄</div>
+                    <div>Fiche + RGPD + SIREN (sélection multiple)</div>
+                    <input type="file" id="file-input-3-pdfs" multiple accept=".pdf" style="display: none;">
+                    <button type="button" onclick="document.getElementById('file-input-3-pdfs').click()" style="padding: 8px 16px; margin-top: 10px; background: #4CAF50; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                        Sélectionner plusieurs PDFs
+                    </button>
+                </div>
+                <div class="file-list" id="file-list-3-pdfs"></div>
+
+                <div class="loading" id="loading-3">
+                    <div class="spinner"></div>
+                    <div>Traitement en cours...</div>
+                </div>
+
+                <button type="submit" class="btn-submit" id="btn-submit-3" disabled>
+                    Analyser tout et continuer
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let selectedFiles = {
+            1: [],
+            2: null,
+            3: {excel: null, pdfs: []}
+        };
+
+        // Tableau global pour accumuler les PDFs du workflow 3
+        window.accumulatedPdfs = [];
+        console.log('🚀 Script chargé - window.accumulatedPdfs initialisé:', window.accumulatedPdfs);
+
+        // CRITIQUE: Empêcher le navigateur d'ouvrir les fichiers droppés en dehors des zones
+        // SANS stopPropagation() pour laisser les zones de drop capturer les événements
+        document.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        document.addEventListener('drop', (e) => {
+            e.preventDefault();
+            console.log('⚠️ Drop intercepté en dehors des zones de drop');
+        });
+
+        function selectWorkflow(workflowId) {
+            document.getElementById(`modal-workflow-${workflowId}`).classList.add('active');
+        }
+
+        function closeModal(workflowId) {
+            document.getElementById(`modal-workflow-${workflowId}`).classList.remove('active');
+        }
+
+        // Workflow 1: PDFs
+        setupFileHandlers(1, 'pdf', true);
+        document.getElementById('form-pdfs').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await submitWorkflow1();
+        });
+
+        // Workflow 2: Excel
+        setupFileHandlers(2, 'excel', false);
+        document.getElementById('form-excel').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await submitWorkflow2();
+        });
+
+        // Workflow 3: Hybride
+        setupHybridHandlers();
+        document.getElementById('form-hybride').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await submitWorkflow3();
+        });
+
+        function setupFileHandlers(workflowId, type, multiple) {
+            const dropZone = document.getElementById(`drop-zone-${workflowId}`);
+            const fileInput = document.getElementById(`file-input-${workflowId}`);
+            const fileList = document.getElementById(`file-list-${workflowId}`);
+            const btnSubmit = document.getElementById(`btn-submit-${workflowId}`);
+
+            // Événements drag & drop avec stopPropagation pour priorité sur le listener global
+            dropZone.addEventListener('dragenter', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.classList.add('dragover');
+            });
+
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.classList.add('dragover');
+            });
+
+            dropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.classList.remove('dragover');
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                console.log(`✅ DROP REÇU - Workflow ${workflowId}:`, files);
+                console.log(`   ${files.length} fichier(s):`, Array.from(files).map(f => f.name));
+                handleFiles(workflowId, files, multiple);
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                console.log(`📁 Workflow ${workflowId}: ${e.target.files.length} fichier(s) sélectionné(s)`);
+                console.log(`   Multiple activé: ${multiple}`);
+                console.log(`   Fichiers:`, Array.from(e.target.files).map(f => f.name));
+                handleFiles(workflowId, e.target.files, multiple);
+            });
+        }
+
+        function setupHybridHandlers() {
+            // Excel - Click handler
+            const excelInput = document.getElementById('file-input-3-excel');
+            console.log('🔧 Setup event listener pour Excel input:', excelInput ? 'OK' : 'ERREUR - élément introuvable');
+
+            excelInput.addEventListener('change', (e) => {
+                console.log('\n📊 EXCEL CHANGE EVENT DÉCLENCHÉ');
+                console.log('   → Nombre de fichiers:', e.target.files.length);
+                if (e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    console.log('   → Fichier sélectionné:', file.name);
+                    console.log('   → Type:', file.type);
+                    console.log('   → Taille:', file.size, 'bytes');
+
+                    // ✅ VALIDATION: Vérifier le format avant de sauvegarder
+                    if (!validateExcelFile(file)) {
+                        console.log('   ❌ Validation échouée - fichier rejeté');
+                        // Réinitialiser l'input pour permettre une nouvelle sélection
+                        e.target.value = '';
+                        return;
+                    }
+                    console.log('   ✅ Validation réussie');
+
+                    selectedFiles[3].excel = file;
+                    console.log('   → Fichier stocké dans selectedFiles[3].excel');
+
+                    displayHybridFiles();
+                    console.log('   → displayHybridFiles() appelée');
+
+                    checkHybridReady();
+                    console.log('   → checkHybridReady() appelée');
+                } else {
+                    console.log('   ⚠️ Aucun fichier dans e.target.files');
+                }
+            });
+
+            // Excel - Drag & drop avec stopPropagation pour capturer l'événement
+            const excelDropZone = document.getElementById('drop-zone-3-excel');
+
+            excelDropZone.addEventListener('dragenter', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                excelDropZone.classList.add('dragover');
+            });
+
+            excelDropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                excelDropZone.classList.add('dragover');
+            });
+
+            excelDropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                excelDropZone.classList.remove('dragover');
+            });
+
+            excelDropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                excelDropZone.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                console.log('✅ DROP REÇU - Excel:', files);
+                if (files.length > 0) {
+                    const file = files[0];
+                    console.log(`   Fichier: ${file.name}`);
+                    // ✅ VALIDATION: Vérifier le format avant de sauvegarder
+                    if (!validateExcelFile(file)) {
+                        return;
+                    }
+                    selectedFiles[3].excel = file;
+                    displayHybridFiles();
+                    checkHybridReady();
+                }
+            });
+
+            // ========================================
+            // PDFs - RÉÉCRITURE COMPLÈTE avec accumulation
+            // ========================================
+            const pdfsInput = document.getElementById('file-input-3-pdfs');
+            const pdfsDropZone = document.getElementById('drop-zone-3-pdfs');
+
+            // Click handler - AJOUTE au tableau et reset l'input
+            pdfsInput.addEventListener('change', (e) => {
+                const newFiles = Array.from(e.target.files);
+                console.log(`\n📁 CLICK HANDLER - Ajout de ${newFiles.length} fichier(s) PDF`);
+                console.log(`   Avant: ${window.accumulatedPdfs.length} PDF(s) dans le tableau`);
+                console.log(`   Nouveaux fichiers:`, newFiles.map(f => f.name));
+
+                // AJOUTER au tableau (pas remplacer)
+                window.accumulatedPdfs.push(...newFiles);
+                console.log(`   Après: ${window.accumulatedPdfs.length} PDF(s) dans le tableau`);
+                console.log(`   Contenu complet:`, window.accumulatedPdfs.map(f => f.name));
+
+                // RESET l'input pour permettre de re-sélectionner
+                e.target.value = '';
+                console.log(`   Input reseté (value=''), prêt pour nouvelle sélection`);
+
+                displayAccumulatedPdfs();
+                checkHybridReady();
+            });
+
+            // Drag & drop handlers
+            pdfsDropZone.addEventListener('dragenter', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                pdfsDropZone.classList.add('dragover');
+            });
+
+            pdfsDropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                pdfsDropZone.classList.add('dragover');
+            });
+
+            pdfsDropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                pdfsDropZone.classList.remove('dragover');
+            });
+
+            // Drop handler - AJOUTE au tableau (pas remplacer)
+            pdfsDropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                pdfsDropZone.classList.remove('dragover');
+
+                const droppedFiles = Array.from(e.dataTransfer.files);
+                console.log(`\n✅ DROP HANDLER - Ajout de ${droppedFiles.length} fichier(s) PDF`);
+                console.log(`   Avant: ${window.accumulatedPdfs.length} PDF(s) dans le tableau`);
+                console.log(`   Fichiers droppés:`, droppedFiles.map(f => f.name));
+
+                // AJOUTER au tableau (pas remplacer)
+                window.accumulatedPdfs.push(...droppedFiles);
+                console.log(`   Après: ${window.accumulatedPdfs.length} PDF(s) dans le tableau`);
+                console.log(`   Contenu complet:`, window.accumulatedPdfs.map(f => f.name));
+
+                displayAccumulatedPdfs();
+                checkHybridReady();
+            });
+        }
+
+        // ✅ VALIDATION: Fonction pour valider les fichiers Excel
+        function validateExcelFile(file) {
+            const validExtensions = ['.xlsx', '.xlsm'];
+            const fileName = file.name.toLowerCase();
+            const isValid = validExtensions.some(ext => fileName.endsWith(ext));
+
+            if (!isValid) {
+                alert(`❌ Format invalide : "${file.name}"\n\nSeuls les fichiers .xlsx et .xlsm sont acceptés.`);
+                return false;
+            }
+            return true;
+        }
+
+        function handleFiles(workflowId, files, multiple) {
+            if (workflowId === 1) {
+                selectedFiles[1] = Array.from(files);
+                displayFiles(1);
+                document.getElementById('btn-submit-1').disabled = selectedFiles[1].length === 0;
+            } else if (workflowId === 2) {
+                // ✅ VALIDATION: Vérifier le format avant de sauvegarder
+                const file = files[0];
+                if (!validateExcelFile(file)) {
+                    // Réinitialiser l'input pour permettre une nouvelle sélection
+                    document.getElementById('file-input-2').value = '';
+                    return;
+                }
+                selectedFiles[2] = file;
+                displayFiles(2);
+                document.getElementById('btn-submit-2').disabled = !selectedFiles[2];
+            }
+        }
+
+        function displayFiles(workflowId) {
+            const fileList = document.getElementById(`file-list-${workflowId}`);
+            fileList.innerHTML = '';
+
+            if (workflowId === 1) {
+                selectedFiles[1].forEach((file, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'file-item';
+                    item.innerHTML = `
+                        <span>📄 ${file.name}</span>
+                        <span class="remove-file" onclick="removeFile(1, ${index})">✖</span>
+                    `;
+                    fileList.appendChild(item);
+                });
+            } else if (workflowId === 2 && selectedFiles[2]) {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                item.innerHTML = `<span>📊 ${selectedFiles[2].name}</span>`;
+                fileList.appendChild(item);
+            }
+        }
+
+        function displayHybridFiles() {
+            const excelList = document.getElementById('file-list-3-excel');
+
+            excelList.innerHTML = '';
+            if (selectedFiles[3].excel) {
+                excelList.innerHTML = `<div class="file-item"><span>📊 ${selectedFiles[3].excel.name}</span></div>`;
+            }
+        }
+
+        // Nouvelle fonction pour afficher les PDFs accumulés avec boutons remove
+        function displayAccumulatedPdfs() {
+            console.log(`📋 displayAccumulatedPdfs() appelée - ${window.accumulatedPdfs.length} fichier(s)`);
+            const pdfsList = document.getElementById('file-list-3-pdfs');
+
+            if (!pdfsList) {
+                console.error('❌ Élément file-list-3-pdfs introuvable !');
+                return;
+            }
+
+            pdfsList.innerHTML = '';
+
+            window.accumulatedPdfs.forEach((file, index) => {
+                console.log(`   → Affichage fichier ${index + 1}: ${file.name}`);
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                item.innerHTML = `
+                    <span>📄 ${file.name}</span>
+                    <span class="remove-file" onclick="removeAccumulatedPdf(${index})">✖</span>
+                `;
+                pdfsList.appendChild(item);
+            });
+
+            console.log(`   ✅ ${window.accumulatedPdfs.length} élément(s) affiché(s) dans la liste`);
+        }
+
+        // Fonction pour retirer un PDF du tableau accumulé
+        function removeAccumulatedPdf(index) {
+            console.log(`🗑️ Suppression du PDF à l'index ${index}: ${window.accumulatedPdfs[index].name}`);
+            window.accumulatedPdfs.splice(index, 1);
+            console.log(`   Reste ${window.accumulatedPdfs.length} PDF(s)`);
+            displayAccumulatedPdfs();
+            checkHybridReady();
+        }
+
+        function checkHybridReady() {
+            const ready = selectedFiles[3].excel && window.accumulatedPdfs.length > 0;
+            document.getElementById('btn-submit-3').disabled = !ready;
+            console.log(`🔍 Hybrid ready check: Excel=${!!selectedFiles[3].excel}, PDFs=${window.accumulatedPdfs.length}, Ready=${ready}`);
+        }
+
+        function removeFile(workflowId, index) {
+            selectedFiles[workflowId].splice(index, 1);
+            displayFiles(workflowId);
+            document.getElementById(`btn-submit-${workflowId}`).disabled = selectedFiles[workflowId].length === 0;
+        }
+
+        async function submitWorkflow1() {
+            const loading = document.getElementById('loading-1');
+            loading.classList.add('active');
+
+            const formData = new FormData();
+            selectedFiles[1].forEach(file => {
+                formData.append('files[]', file);
+            });
+            formData.append('workflow', '1');
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    window.location.href = `/form/${result.session_id}`;
+                } else {
+                    alert('Erreur : ' + (result.error || 'Erreur inconnue'));
+                }
+            } catch (error) {
+                alert('Erreur de connexion : ' + error.message);
+            } finally {
+                loading.classList.remove('active');
+            }
+        }
+
+        async function submitWorkflow2() {
+            const loading = document.getElementById('loading-2');
+            loading.classList.add('active');
+
+            const formData = new FormData();
+            formData.append('excel_file', selectedFiles[2]);
+            formData.append('workflow', '2');
+
+            try {
+                const response = await fetch('/upload_excel', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    window.location.href = `/config/${result.session_id}`;
+                } else {
+                    alert('Erreur : ' + (result.error || 'Erreur inconnue'));
+                }
+            } catch (error) {
+                alert('Erreur de connexion : ' + error.message);
+            } finally {
+                loading.classList.remove('active');
+            }
+        }
+
+        async function submitWorkflow3() {
+            const loading = document.getElementById('loading-3');
+            loading.classList.add('active');
+
+            const formData = new FormData();
+            formData.append('excel_file', selectedFiles[3].excel);
+
+            // Utiliser window.accumulatedPdfs au lieu de selectedFiles[3].pdfs
+            console.log(`📤 Envoi de ${window.accumulatedPdfs.length} PDF(s) accumulé(s)`);
+            window.accumulatedPdfs.forEach(file => {
+                formData.append('files[]', file);
+                console.log(`   - ${file.name}`);
+            });
+            formData.append('workflow', '3');
+
+            try {
+                const response = await fetch('/upload_hybride', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    window.location.href = `/form/${result.session_id}`;
+                } else {
+                    alert('Erreur : ' + (result.error || 'Erreur inconnue'));
+                }
+            } catch (error) {
+                alert('Erreur de connexion : ' + error.message);
+            } finally {
+                loading.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,3284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire CPV 2026 - {{ data.raison_sociale }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4CAF50 0%, #2D1B69 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .user-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 12px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        .user-banner .user-info {
+            color: #2d1b69;
+            font-weight: 600;
+        }
+
+        .user-banner a {
+            color: #2d1b69;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .user-banner a:hover {
+            color: #4CAF50;
+        }
+
+        .user-banner .separator {
+            color: #ccc;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #4CAF50;
+        }
+
+        .header h1 {
+            color: #2D1B69;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .header .badge-2026 {
+            display: inline-block;
+            background: linear-gradient(135deg, #4CAF50 0%, #2D1B69 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .help-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #4CAF50 0%, #2D1B69 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .help-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .client-info {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8f5e9 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            border-left: 5px solid #4CAF50;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-weight: 700;
+            color: #2D1B69;
+            font-size: 1.1em;
+        }
+
+        .segment-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #4CAF50 0%, #2D1B69 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.3em;
+        }
+
+        /* Styles pour les inputs éditables dans le bandeau */
+        .editable-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: 600;
+            color: #2D1B69;
+            background: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .editable-input:hover {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: #4CAF50;
+        }
+
+        .editable-input:focus {
+            outline: none;
+            background: white;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+        }
+
+        .editable-select {
+            width: auto;
+            min-width: 120px;
+            padding: 10px 15px;
+            border: 2px solid #4CAF50;
+            border-radius: 25px;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #4CAF50 0%, #2D1B69 100%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .editable-select:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .editable-select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+        }
+
+        .editable-select option {
+            background: white;
+            color: #2D1B69;
+        }
+
+        .input-with-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-icon {
+            font-size: 0.9em;
+            color: #4CAF50;
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f9f9f9;
+            border-radius: 15px;
+            border-left: 5px solid #4CAF50;
+        }
+
+        .form-section.validation-section {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%);
+            border-left: 5px solid #ff9800;
+        }
+
+        .section-title {
+            color: #2D1B69;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4CAF50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .form-label.required::after {
+            content: " *";
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .form-input.error {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .form-input.success {
+            border-color: #4CAF50;
+            background: #f1f8f4;
+        }
+
+        .form-input.warning {
+            border-color: #ffc107;
+            background: #fff3cd;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        /* Score validation visual */
+        .score-container {
+            position: relative;
+        }
+
+        .score-validation {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+
+        .score-validation.error {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #f44336;
+            display: block;
+        }
+
+        .score-validation.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #4CAF50;
+            display: block;
+        }
+
+        .score-validation.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffc107;
+            display: block;
+        }
+
+        /* Slider marge courtier */
+        .slider-container {
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #4CAF50;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .slider-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #4CAF50;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4CAF50 0%, #2D1B69 100%);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4CAF50 0%, #2D1B69 100%);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            border: none;
+        }
+
+        /* Prix preview table */
+        .prix-preview {
+            margin-top: 25px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .prix-preview table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .prix-preview th {
+            background: linear-gradient(135deg, #4CAF50 0%, #2D1B69 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .prix-preview td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .prix-preview tr:hover {
+            background: #f8f9ff;
+        }
+
+        .prix-preview .prix-p0 {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .prix-preview .prix-client {
+            color: #4CAF50;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        /* Coefficient alpha badge */
+        .coeff-alpha-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff9800 0%, #f44336 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        /* Dynamic PRM Table */
+        .prm-table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        .prm-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .prm-table th {
+            background: #2D1B69;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .prm-table td {
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .prm-table input,
+        .prm-table select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .prm-table input:focus,
+        .prm-table select:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .btn-add-site {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .btn-add-site:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-remove-site {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s;
+        }
+
+        .btn-remove-site:hover {
+            background: #d32f2f;
+        }
+
+        /* CEE Mixte styling */
+        .cee-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cee-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        /* Abonnement offert */
+        .abonnement-offert {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: 10px;
+            border: 3px solid #4CAF50;
+        }
+
+        .abonnement-offert .prix-barre {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .abonnement-offert .offert {
+            color: #4CAF50;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-left: 20px;
+        }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(135deg, #4CAF50 0%, #2D1B69 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #ff9800;
+            padding: 12px 30px;
+            font-size: 1em;
+        }
+
+        .btn-secondary:hover {
+            background: #f57c00;
+        }
+
+        .alert {
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 5px solid #28a745;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 5px solid #f44336;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 5px solid #ffc107;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #4CAF50;
+            font-size: 1.2em;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4CAF50;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-grid, .form-grid-2, .form-grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .prm-table {
+                font-size: 0.85em;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- User Banner -->
+    <div class="user-banner">
+        <span class="user-info">👤 {{ current_user.nom }}{% if current_user.is_admin %} (Admin){% endif %}</span>
+        {% if current_user.is_admin %}
+            <span class="separator">|</span>
+            <a href="{{ url_for('admin') }}">👥 Gestion utilisateurs</a>
+        {% endif %}
+        <span class="separator">|</span>
+        <a href="{{ url_for('logout') }}">🚪 Déconnexion</a>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📝 Formulaire CPV 2026</h1>
+            <div class="badge-2026">✨ Format MINT Énergie 2026 • Coefficient α</div>
+            <h2 id="header_title" style="color: #4CAF50; margin-top: 15px;">{{ data.raison_sociale or data.nom_gerant or "Client" }}</h2>
+        </div>
+
+        <!-- Bandeau d'information règles multi-sites -->
+        <div style="background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%); border: 1px solid #ffc107; border-left: 4px solid #ff9800; border-radius: 8px; padding: 15px 20px; margin: 15px 0 25px 0; font-size: 14px; line-height: 1.6; color: #664d03;">
+            <div style="font-weight: 700; font-size: 15px; margin-bottom: 8px;">
+                📋 Règles de saisie multi-sites
+            </div>
+            <div>
+                📌 Plusieurs sites peuvent être ajoutés sur un même contrat (C2, C4, C5).<br>
+                ⚠️ Les sites partageant le <strong>même calendrier tarifaire</strong> (BASE, HP-HC ou 4 cadrans) doivent avoir les <strong>mêmes dates de début et de fin</strong> de fourniture.<br>
+                💡 Si vos sites ont des dates différentes sur un même calendrier, veuillez créer des <strong>contrats séparés</strong>.
+            </div>
+        </div>
+
+        <div class="client-info">
+            <div class="info-item">
+                <label class="info-label" for="raison_sociale_display">Raison Sociale ✏️</label>
+                <div class="input-with-icon">
+                    <input type="text"
+                           id="raison_sociale_display"
+                           class="editable-input"
+                           value="{{ data.raison_sociale or '' }}"
+                           placeholder="Nom de l'entreprise">
+                </div>
+            </div>
+            <div class="info-item">
+                <label class="info-label" for="siren_display">SIREN (9 chiffres) ✏️</label>
+                <div class="input-with-icon">
+                    <input type="text"
+                           id="siren_display"
+                           class="editable-input"
+                           value="{{ data.siren or data.siret_complet[:9] if data.siret_complet else '' }}"
+                           placeholder="123456789"
+                           pattern="[0-9]{9}"
+                           maxlength="9">
+                </div>
+            </div>
+            <div class="info-item">
+                <label class="info-label" for="segment_display">Segment</label>
+                <select id="segment_display"
+                        class="editable-select">
+                    <option value="C2" {% if segment == 'C2' %}selected{% endif %}>C2</option>
+                    <option value="C4" {% if segment == 'C4' %}selected{% endif %}>C4</option>
+                    <option value="C5" {% if segment == 'C5' %}selected{% endif %}>C5</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="alerts"></div>
+
+        <form id="cpvForm" novalidate>
+            <input type="hidden" id="session_id" value="{{ session_id }}">
+            <input type="hidden" id="raison_sociale" name="raison_sociale" value="{{ data.raison_sociale or '' }}">
+            <input type="hidden" id="siren" name="siren" value="{{ data.siren or data.siret_complet[:9] if data.siret_complet else '' }}">
+            <input type="hidden" id="segment" name="segment" value="{{ segment }}">
+
+            <!-- SECTION 1: VALIDATION SCORE (PRIORITAIRE) -->
+            <div class="form-section validation-section">
+                <h2 class="section-title">⚠️ 1. Validation Client (OBLIGATOIRE)</h2>
+                <div class="form-group">
+                    <label class="form-label required">Score Client (/10)</label>
+                    <div class="score-container">
+                        <input type="number" step="1" min="1" max="10" name="score_client"
+                               id="score_client" class="form-input" placeholder="Ex: 7" required
+                               onkeydown="if(event.key==='.' || event.key===',') event.preventDefault();"
+                               oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(parseInt(this.value) > 10) this.value = 10; if(parseInt(this.value) < 1 && this.value !== '') this.value = 1;">
+                        <div class="score-validation" id="score_validation"></div>
+                    </div>
+                    <small style="color: #666; margin-top: 5px; display: block;">
+                        ⚠️ <strong>Score minimum : 5/10</strong> (bloquant si inférieur)
+                    </small>
+                </div>
+            </div>
+
+            <!-- SECTION 2: INFORMATIONS JURIDIQUES -->
+            <div class="form-section">
+                <h2 class="section-title">🏢 2. Informations Juridiques</h2>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label required">Forme Juridique</label>
+                        <select name="forme_juridique" id="forme-juridique-select" class="form-select" required>
+                            <option value="">-- Sélectionner --</option>
+                            <option value="SAS" {% if data.forme_juridique == 'SAS' %}selected{% endif %}>SAS - Société par Actions Simplifiée</option>
+                            <option value="SASU" {% if data.forme_juridique == 'SASU' %}selected{% endif %}>SASU - SAS Unipersonnelle</option>
+                            <option value="SARL" {% if data.forme_juridique == 'SARL' %}selected{% endif %}>SARL - Société à Responsabilité Limitée</option>
+                            <option value="EURL" {% if data.forme_juridique == 'EURL' %}selected{% endif %}>EURL - Entreprise Unipersonnelle à RL</option>
+                            <option value="SA" {% if data.forme_juridique == 'SA' %}selected{% endif %}>SA - Société Anonyme</option>
+                            <option value="SCI" {% if data.forme_juridique == 'SCI' %}selected{% endif %}>SCI - Société Civile Immobilière</option>
+                            <option value="SELARL" {% if data.forme_juridique == 'SELARL' %}selected{% endif %}>SELARL - Société d'Exercice Libéral à RL</option>
+                            <option value="SNC" {% if data.forme_juridique == 'SNC' %}selected{% endif %}>SNC - Société en Nom Collectif</option>
+                            <option value="Entrepreneur individuel" {% if data.forme_juridique == 'Entrepreneur individuel' %}selected{% endif %}>Entrepreneur individuel (EI)</option>
+                            <option value="Autre" {% if data.forme_juridique == 'Autre' %}selected{% endif %}>Autre</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label required">Capital Social (€)</label>
+                        <input type="text" name="capital_social" id="capital-social-input" class="form-input"
+                               value="{{ data.capital_social }}" placeholder="Ex: 10000" required>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label required">Ville du RCS</label>
+                        <input type="text" name="ville_rcs" class="form-input"
+                               value="{{ data.ville_rcs }}"
+                               placeholder="Ex: Paris, Lyon, Marseille..." required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Adresse Siège Social</label>
+                        <input type="text" name="adresse_siege" class="form-input"
+                               value="{{ data.adresse_siege or data.adresse_consommation }}"
+                               placeholder="Adresse complète">
+                    </div>
+                </div>
+
+                <h3 style="color: #2D1B69; margin-top: 25px; margin-bottom: 15px; font-size: 1.2em;">
+                    👤 Signataire du Contrat
+                </h3>
+                <div class="form-grid-3">
+                    <div class="form-group">
+                        <label class="form-label required">Nom du Signataire</label>
+                        <input type="text" name="nom_signataire" class="form-input"
+                               value="{{ data.nom_gerant or data.signataire_nom }}"
+                               placeholder="Nom et Prénom" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label required">Fonction du Signataire</label>
+                        <input type="text" name="fonction_signataire" class="form-input"
+                               value="{{ data.fonction_signataire }}"
+                               placeholder="Ex: Président, Gérant, Directeur..." required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Civilité</label>
+                        <select name="civilite" class="form-select">
+                            <option value="M." {% if data.civilite == 'M.' %}selected{% endif %}>M.</option>
+                            <option value="Mme" {% if data.civilite == 'Mme' %}selected{% endif %}>Mme</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label required">Email</label>
+                        <input type="email" name="email" class="form-input"
+                               value="{{ data.email }}" placeholder="email@entreprise.fr" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label required">Téléphone</label>
+                        <input type="tel" name="telephone" class="form-input"
+                               value="{{ data.telephone }}" placeholder="01 23 45 67 89" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: CONFIGURATION TARIFAIRE -->
+            <div class="form-section">
+                <h2 class="section-title">💰 3. Configuration Tarifaire (Excel 2026)</h2>
+
+                <!-- Type de calendrier (uniquement pour C5) -->
+                <div class="form-group" id="type_calendrier_section" style="display: none;">
+                    <label class="form-label required">📅 Type de Calendrier</label>
+                    <select id="type_calendrier_site" class="form-select">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="BASE">BASE (1 tarif)</option>
+                        <option value="HP-HC">HP-HC (2 tarifs)</option>
+                        <option value="4_cadrans">4 cadrans (HPSH, HCSH, HPSB, HCSB)</option>
+                    </select>
+                    <small style="color: #666; margin-top: 5px; display: block;">
+                        ⚡ Choisissez le type de calendrier pour ce site (les champs CAR s'adapteront en Section 4)
+                    </small>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label required">Date de Début</label>
+                        <input type="date" name="date_debut" id="date_debut" class="form-input">
+                        <small style="color: #666; margin-top: 5px; display: block;">
+                            📅 Sélectionnez n'importe quelle date (les prix du 1er du mois seront utilisés)
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label required">Date de Fin du Contrat</label>
+                        <select name="duree_mois" id="duree_mois" class="form-select">
+                            <option value="">-- Sélectionner une date de fin --</option>
+                        </select>
+                        <small style="color: #666; margin-top: 5px; display: block;">
+                            📅 Date de fin du contrat (dernier jour du mois, 12 à 47 mois après le début)
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Date de Fin (Calculée Automatiquement)</label>
+                    <input type="text" id="date_fin_display" class="form-input"
+                           placeholder="Sera calculée automatiquement" readonly
+                           style="background: #f0f0f0; cursor: not-allowed;">
+                    <input type="hidden" name="date_fin" id="date_fin">
+                </div>
+
+                <div class="slider-container">
+                    <div class="slider-label">
+                        <label class="form-label">Marge Courtier (€/MWh)</label>
+                        <div class="slider-value">
+                            <span id="marge_value">10.00</span> €/MWh
+                        </div>
+                    </div>
+                    <input type="range" id="marge_courtier" name="marge_courtier"
+                           min="6" max="25" step="0.5" value="10">
+                    <div style="display: flex; justify-content: space-between; color: #999; font-size: 0.85em; margin-top: 5px;">
+                        <span>6 €/MWh (min)</span>
+                        <span>25 €/MWh (max)</span>
+                    </div>
+
+                    <!-- COMMISSION TOTALE -->
+                    <div style="margin-top: 20px; padding: 20px; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 10px; border-left: 5px solid #4CAF50;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="font-size: 0.95em; color: #2e7d32; font-weight: 600;">
+                                💰 COMMISSION TOTALE SUR LA DURÉE DU CONTRAT
+                            </div>
+                            <div style="font-size: 2em; font-weight: 700; color: #4CAF50;">
+                                <span id="commission_totale">0</span> €
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prix-preview" id="prix_preview" style="display: none;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Poste Horosaisonnier</th>
+                                <th>Prix P0 (€/MWh)</th>
+                                <th>Marge (€/MWh)</th>
+                                <th>Prix Client (€/MWh)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="prix_preview_body">
+                            <!-- Rempli dynamiquement -->
+                        </tbody>
+                    </table>
+                    <div style="padding: 15px; background: #f0f0f0; text-align: center;">
+                        <strong>Coefficient de capacité α :</strong>
+                        <span class="coeff-alpha-badge" id="coeff_alpha_display">-</span>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-secondary" id="btnCalculerPrix" style="margin-top: 20px; width: 100%;">
+                    🔍 Calculer les Prix et Afficher l'Aperçu
+                </button>
+            </div>
+
+            <!-- SECTION 4: CONSOMMATIONS -->
+            <div class="form-section">
+                <h2 class="section-title">⚡ 4. Consommation Annuelle de Référence (CAR)</h2>
+                <div id="consoFields"></div>
+                <div id="consoTotal" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 20px; border-radius: 10px; margin-top: 20px; border-left: 5px solid #4CAF50;">
+                    <strong style="font-size: 1.2em;">📊 CAR Totale :</strong>
+                    <span id="currentTotal" style="font-size: 1.8em; color: #4CAF50; font-weight: 700; margin-left: 10px;">0.00</span> MWh/an
+                </div>
+            </div>
+
+            <!-- SECTION 5: SITES ET PRM (TABLEAU DYNAMIQUE) -->
+            <div class="form-section">
+                <h2 class="section-title">📍 5. Sites de Consommation (Détails PRM)</h2>
+                <p style="margin-bottom: 15px; color: #666;">
+                    Ajoutez tous les sites de consommation avec leurs informations détaillées.
+                </p>
+
+                <!-- Formulaire d'infos du site (TOUJOURS visible pour multi-segment) -->
+                <div id="site_info_form" style="display: block; background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); padding: 25px; border-radius: 12px; margin-bottom: 25px; border-left: 5px solid #FF9800;">
+                    <h3 style="color: #E65100; margin-bottom: 20px; font-size: 1.2em;">🏢 Informations du Site</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label required">PRM (14 chiffres)</label>
+                            <input type="text" id="site_prm" class="form-input" maxlength="14" placeholder="00000000000000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">SIRET (14 chiffres)</label>
+                            <input type="text" id="site_siret" class="form-input" maxlength="14" placeholder="00000000000000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">Code NAF</label>
+                            <input type="text" id="site_naf" class="form-input" placeholder="47.11A">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">Adresse du Site</label>
+                            <input type="text" id="site_adresse" class="form-input" placeholder="Adresse complète">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">FTA</label>
+                            <select id="site_fta" class="form-input">
+                                <option value="">-- Choisir --</option>
+                                <option value="BT ≤ 36 kVA">BT ≤ 36 kVA</option>
+                                <option value="BT > 36 kVA">BT > 36 kVA</option>
+                                <option value="HTA">HTA</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">Puissance (kVA)</label>
+                            <input type="number" step="0.01" id="site_puissance" class="form-input" placeholder="0.00">
+                        </div>
+                    </div>
+                    <button type="button" id="btnAddSiteFromForm" class="btn-add-site" style="margin-top: 20px; width: 100%;">
+                        ➕ Ajouter ce Site au Tableau
+                    </button>
+                </div>
+
+                <div class="prm-table-container">
+                    <table class="prm-table" id="prm_table">
+                        <thead>
+                            <tr>
+                                <th style="width: 140px;">PRM (14 chiffres)</th>
+                                <th style="width: 140px;">SIRET (14 chiffres)</th>
+                                <th style="width: 100px;">Code NAF</th>
+                                <th style="width: 200px;">Adresse du Site</th>
+                                <th style="width: 140px;">Type Calendrier</th>
+                                <th style="width: 100px;">FTA</th>
+                                <th style="width: 120px;">Puissance (kVA)</th>
+                                <th style="width: 80px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="prm_table_body">
+                            <!-- Premier site par défaut -->
+                        </tbody>
+                    </table>
+                </div>
+                <button type="button" class="btn-add-site" id="btnAddSite">
+                    ➕ Ajouter un Site
+                </button>
+            </div>
+
+            <!-- SECTION 6: OPTIONS COMPLÉMENTAIRES -->
+            <div class="form-section">
+                <h2 class="section-title">🔧 6. Options Complémentaires</h2>
+
+                <!-- CEE - Certificats d'Économie d'Énergie -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label class="form-label required">Client soumis aux CEE (Certificats d'Économie d'Énergie)</label>
+                    <div style="display: flex; gap: 20px; margin-top: 10px;">
+                        <label style="display: flex; align-items: center; cursor: pointer; font-weight: normal;">
+                            <input type="radio" name="cee_status" value="soumis" style="margin-right: 8px;" required>
+                            ☐ Soumis (tous les sites)
+                        </label>
+                        <label style="display: flex; align-items: center; cursor: pointer; font-weight: normal;">
+                            <input type="radio" name="cee_status" value="non_soumis" checked style="margin-right: 8px;" required>
+                            ☐ Non Soumis (tous les sites)
+                        </label>
+                        <label style="display: flex; align-items: center; cursor: pointer; font-weight: normal;">
+                            <input type="radio" name="cee_status" value="mixte" style="margin-right: 8px;" required>
+                            ☐ Mixte (selon secteur d'activité de chaque site)
+                        </label>
+                    </div>
+                </div>
+
+                <!-- GO - Garanties d'Origine -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label class="form-label">Garanties d'Origine (GO)</label>
+
+                    <!-- Choix Souhaité / Non souhaité -->
+                    <div style="display: flex; gap: 20px; margin-top: 10px;">
+                        <label style="display: flex; align-items: center; cursor: pointer; font-weight: normal;">
+                            <input type="radio" name="go_choix" value="non_souhaite" checked style="margin-right: 8px;" required>
+                            ☐ Non souhaité
+                        </label>
+                        <label style="display: flex; align-items: center; cursor: pointer; font-weight: normal;">
+                            <input type="radio" name="go_choix" value="souhaite" style="margin-right: 8px;" required>
+                            ☐ Souhaité
+                        </label>
+                    </div>
+
+                    <!-- Pourcentage GO (affiché seulement si Souhaité) -->
+                    <div id="go_percentage_section" style="display: none; margin-top: 15px; padding-left: 20px;">
+                        <label class="form-label" style="font-size: 0.9em; color: #666;">Part de la consommation couverte :</label>
+                        <div style="display: flex; gap: 15px; margin-top: 8px;">
+                            <label style="display: flex; align-items: center; cursor: pointer; font-weight: normal;">
+                                <input type="radio" name="go_percentage" value="25" checked style="margin-right: 8px;">
+                                ☐ 25%
+                            </label>
+                            <label style="display: flex; align-items: center; cursor: pointer; font-weight: normal;">
+                                <input type="radio" name="go_percentage" value="50" style="margin-right: 8px;">
+                                ☐ 50%
+                            </label>
+                            <label style="display: flex; align-items: center; cursor: pointer; font-weight: normal;">
+                                <input type="radio" name="go_percentage" value="100" style="margin-right: 8px;">
+                                ☐ 100%
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Hidden input pour compatibilité avec le backend -->
+                    <input type="hidden" name="go_souhaite" id="go_souhaite_hidden" value="0">
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Garantie de Paiement (€)</label>
+                        <input type="number" step="0.01" name="garantie_montant" class="form-input" value="0">
+                    </div>
+                    <div style="visibility: hidden;"></div>
+                </div>
+
+                <div class="abonnement-offert">
+                    <h3 style="color: #2D1B69; margin-bottom: 10px;">🎁 Frais d'Abonnement MINT Énergie</h3>
+                    <div>
+                        <span class="prix-barre">600 €</span>
+                        <span class="offert">OFFERT</span>
+                    </div>
+                    <p style="color: #666; margin-top: 10px; font-size: 0.95em;">
+                        Les frais d'abonnement annuels sont offerts pour tout nouveau contrat 2026
+                    </p>
+                </div>
+
+                <div class="form-grid-2" style="margin-top: 20px;">
+                    <div class="form-group">
+                        <label class="form-label">IBAN (optionnel)</label>
+                        <input type="text" name="iban" class="form-input" placeholder="FR76...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">BIC (optionnel)</label>
+                        <input type="text" name="bic" class="form-input" placeholder="XXXXXXXX">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Contractuels MINT Énergie -->
+            <div style="background: #f8f9fa; border: 2px solid #dee2e6; border-radius: 12px; padding: 20px; margin: 20px 0;">
+
+                <!-- Sous-section 1 : Documents à joindre au contrat -->
+                <h3 style="color: #1a1a2e; margin-top: 0; margin-bottom: 4px; font-size: 18px;">📋 Documents à joindre au contrat client</h3>
+                <p style="color: #666; font-size: 13px; margin-bottom: 12px;">À envoyer systématiquement avec le CPV</p>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <a href="https://drive.google.com/uc?export=download&id=1EpQbdSLwkXJO-66ipWAtKDdElu4ekPR4" target="_blank"
+                       style="padding: 12px 20px; background: linear-gradient(135deg, #6c3483, #8e44ad); color: white; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.2s;">
+                        📄 CGV Mint Énergie Pro
+                    </a>
+                </div>
+
+                <hr style="border: none; border-top: 1px solid #dee2e6; margin: 16px 0;">
+
+                <!-- Sous-section 2 : Communication avec Mint -->
+                <h3 style="color: #1a1a2e; margin-bottom: 4px; font-size: 18px;">📨 Communication avec Mint — selon le profil client</h3>
+                <p style="color: #666; font-size: 13px; margin-bottom: 12px;">À utiliser si nécessaire selon la situation du client</p>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+
+                    <a href="https://drive.google.com/uc?export=download&id=1EHIXf4jwu9k8LVStVrwj1DdOs4D2-JS4" target="_blank"
+                       style="padding: 12px 20px; background: linear-gradient(135deg, #2471a3, #2e86c1); color: white; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.2s;">
+                        👥 Annexe Payeurs Multiples
+                    </a>
+
+                    <a href="https://drive.google.com/uc?export=download&id=1V1Ag8DdTCkLbKgtqMkczjtcWBSwBfwFP" target="_blank"
+                       style="padding: 12px 20px; background: linear-gradient(135deg, #1e8449, #27ae60); color: white; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.2s;">
+                        💰 Annexe Prix Différenciés
+                    </a>
+
+                    <a href="https://drive.google.com/uc?export=download&id=10f6DjK81vfHaPgKI0nEfUuy-iA26xs8J" target="_blank"
+                       style="padding: 12px 20px; background: linear-gradient(135deg, #c0392b, #e74c3c); color: white; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.2s;">
+                        📊 Multi-Sites > 300 MWh
+                    </a>
+
+                </div>
+            </div>
+
+            <button type="submit" class="btn" id="btnGenerate" style="width: 100%;" disabled>
+                🚀 Générer le CPV 2026
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // ============================================================
+        // FONCTION DE NOTIFICATION ÉLÉGANTE
+        // ============================================================
+        function showNotification(message, type = 'info') {
+            // type: 'success', 'warning', 'error', 'info'
+            const colors = {
+                success: { bg: '#d4edda', border: '#28a745', icon: '✅' },
+                warning: { bg: '#fff3cd', border: '#ffc107', icon: '⚠️' },
+                error: { bg: '#f8d7da', border: '#dc3545', icon: '❌' },
+                info: { bg: '#d1ecf1', border: '#17a2b8', icon: 'ℹ️' }
+            };
+
+            const style = colors[type] || colors.info;
+
+            // Créer l'overlay
+            const overlay = document.createElement('div');
+            overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:center;justify-content:center;';
+
+            // Créer la boîte de notification
+            const box = document.createElement('div');
+            box.style.cssText = `background:white;border-radius:16px;padding:30px 40px;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);border-top:4px solid ${style.border};text-align:center;font-family:system-ui,-apple-system,sans-serif;`;
+
+            box.innerHTML = `
+                <div style="font-size:48px;margin-bottom:15px;">${style.icon}</div>
+                <div style="font-size:16px;line-height:1.6;color:#333;margin-bottom:25px;white-space:pre-line;">${message}</div>
+                <button onclick="this.closest('div[style*=position]').remove()"
+                    style="background:${style.border};color:white;border:none;padding:10px 30px;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600;">
+                    OK
+                </button>
+            `;
+
+            overlay.appendChild(box);
+            document.body.appendChild(overlay);
+
+            // Fermer en cliquant sur l'overlay
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) overlay.remove();
+            });
+        }
+
+        // ============================================================
+        // VARIABLES GLOBALES
+        // ============================================================
+        let segment = "{{ segment }}";
+        const sessionId = "{{ session_id }}";
+
+        // MODIFICATION 3: Mapper C3 → C2 (C3 est traité comme C2)
+        if (segment === 'C3') {
+            segment = 'C2';
+            console.log('   ✓ Segment C3 détecté → mappé vers C2');
+            // Mettre à jour le dropdown et le hidden input
+            document.getElementById('segment_display').value = 'C2';
+            document.getElementById('segment').value = 'C2';
+        }
+
+        // Debug au chargement
+        console.log('🚀 Form CPV 2026 - Script chargé');
+        console.log(`   Segment: "${segment}"`);
+        console.log(`   Session ID: "${sessionId}"`);
+
+        let prixP0Data = null;
+        let consommations = {};
+        let siteCount = 0;
+
+        // ============================================================
+        // C5 WORKFLOW: Variables pour pré-remplissage séquentiel des sites
+        // ============================================================
+        let sitesFromRGPD = [];  // Stocke tous les sites parsés depuis le RGPD
+        let currentSiteIndex = 0;  // Index du site actuellement en cours de saisie
+
+        // ============================================================
+        // FONCTIONS POUR LE BANDEAU ÉDITABLE
+        // ============================================================
+
+        // Synchroniser le titre avec la raison sociale
+        function updateHeaderTitle(value) {
+            const headerTitle = document.getElementById('header_title');
+            headerTitle.textContent = value || 'Client';
+            // Synchroniser avec le champ hidden du formulaire
+            document.getElementById('raison_sociale').value = value || '';
+        }
+
+        // Synchroniser raison_sociale_display avec le champ hidden
+        document.getElementById('raison_sociale_display').addEventListener('input', function() {
+            updateHeaderTitle(this.value);
+        });
+
+        // Synchroniser siren_display avec le champ hidden
+        document.getElementById('siren_display').addEventListener('input', function() {
+            document.getElementById('siren').value = this.value;
+        });
+
+        // MODIFICATION 2: Gérer le changement de segment (NE PAS TOUCHER LA SECTION 5!)
+        document.getElementById('segment_display').addEventListener('change', function() {
+            const newSegment = this.value;
+            console.log(`🔄 Changement de segment: ${segment} → ${newSegment}`);
+
+            // Changer le segment
+            segment = newSegment;
+
+            // Synchroniser avec le champ hidden du formulaire
+            document.getElementById('segment').value = newSegment;
+
+            // 1. Réinitialiser les PRIX (Section 2)
+            prixP0Data = null;
+            document.getElementById('prix_preview').style.display = 'none';
+            console.log('   ✓ Section 2: Prix réinitialisés');
+
+            // 2. SAUVEGARDER les données de la Section 3 AVANT de régénérer les champs
+            const savedDateDebut = document.getElementById('date_debut')?.value || '';
+            const savedDuree = document.getElementById('duree_mois')?.value || '';
+            const savedDateFinDisplay = document.getElementById('date_fin_display')?.value || '';
+            const savedDateFin = document.getElementById('date_fin')?.value || '';
+            const savedMarge = document.getElementById('marge_courtier')?.value || '';
+            console.log('   📦 Sauvegardé: Date Début:', savedDateDebut, '| Durée:', savedDuree, '| Marge:', savedMarge);
+
+            // 3. Regénérer les champs de CONSOMMATION (Section 2 pour C2/C4, Section 3 pour C5)
+            generateConsoFields();  // Gère automatiquement le Type de Calendrier pour C5
+            console.log('   ✓ Section 2/3: Champs de consommation régénérés');
+
+            // 4. RESTAURER les données de la Section 3 APRÈS régénération
+            if (savedDateDebut) {
+                const dateDebutField = document.getElementById('date_debut');
+                if (dateDebutField) {
+                    dateDebutField.value = savedDateDebut;
+                    console.log('   ✅ Restauré Date Début:', savedDateDebut);
+                }
+            }
+            if (savedDuree) {
+                const dureeField = document.getElementById('duree_mois');
+                if (dureeField) {
+                    dureeField.value = savedDuree;
+                    console.log('   ✅ Restauré Durée:', savedDuree);
+                    // Activer le champ durée si une date de début est présente
+                    if (savedDateDebut) {
+                        dureeField.disabled = false;
+                    }
+                }
+            }
+            if (savedDateFinDisplay) {
+                const dateFinDisplayField = document.getElementById('date_fin_display');
+                if (dateFinDisplayField) {
+                    dateFinDisplayField.value = savedDateFinDisplay;
+                }
+            }
+            if (savedDateFin) {
+                const dateFinField = document.getElementById('date_fin');
+                if (dateFinField) {
+                    dateFinField.value = savedDateFin;
+                    console.log('   ✅ Restauré Date Fin:', savedDateFin);
+                }
+            }
+            if (savedMarge) {
+                const margeField = document.getElementById('marge_courtier');
+                if (margeField) {
+                    margeField.value = savedMarge;
+                    // Mettre à jour l'affichage de la marge
+                    const margeValueSpan = document.getElementById('marge_value');
+                    if (margeValueSpan) {
+                        margeValueSpan.textContent = parseFloat(savedMarge).toFixed(2);
+                    }
+                    console.log('   ✅ Restauré Marge:', savedMarge);
+                }
+            }
+
+            // 5. Masquer/afficher le calendrier selon le segment (Section 3)
+            updateTypeCalendrierVisibility();
+            console.log('   ✓ Section 3: Visibilité Type de Calendrier mise à jour');
+
+            // 6. Réinitialiser les champs CAR (Section 4)
+            consommations = {};  // Reset des consommations stockées
+            console.log('   ✓ Section 4: CAR réinitialisés');
+
+            // 7. Recalculer la validation du SCORE en fonction du nouveau segment (Section 1)
+            validateScore();
+            console.log('   ✓ Section 1: Score revalidé');
+
+            console.log(`✅ Sections 1-4 reconfigurées pour segment ${newSegment}`);
+        });
+
+        // ============================================================
+        // 1. VALIDATION SCORE CLIENT
+        // ============================================================
+        const scoreInput = document.getElementById('score_client');
+        const scoreValidation = document.getElementById('score_validation');
+        const btnGenerate = document.getElementById('btnGenerate');
+
+        // Fonction de validation du score qui prend en compte le segment
+        function validateScore() {
+            const score = parseFloat(scoreInput.value);
+            const currentSegment = segment || document.getElementById('segment').value;
+
+            if (isNaN(score) || score === '') {
+                scoreValidation.style.display = 'none';
+                scoreInput.classList.remove('error', 'success', 'warning');
+                btnGenerate.disabled = true;
+                return;
+            }
+
+            if (score < 5) {
+                // Pour C2 et C4 : Warning mais pas bloquant
+                if (currentSegment === 'C2' || currentSegment === 'C4') {
+                    scoreValidation.className = 'score-validation warning';
+                    scoreValidation.innerHTML = '⚠️ Score < 5/10 — Demande de dérogation obligatoire auprès de MINT Énergie avant envoi du contrat';
+                    scoreValidation.style.background = '#fff3cd';
+                    scoreValidation.style.color = '#856404';
+                    scoreValidation.style.border = '1px solid #ffc107';
+                    scoreInput.classList.add('warning');
+                    scoreInput.classList.remove('error', 'success');
+                    // Le bouton reste actif
+                    checkFormValidity();
+                } else {
+                    // Pour C5 : Bloquant
+                    scoreValidation.className = 'score-validation error';
+                    scoreValidation.innerHTML = '❌ BLOQUANT : Score insuffisant (minimum 5/10) — Client refusé';
+                    scoreValidation.style.background = '#f8d7da';
+                    scoreValidation.style.color = '#721c24';
+                    scoreValidation.style.border = '1px solid #f5c6cb';
+                    scoreInput.classList.add('error');
+                    scoreInput.classList.remove('success', 'warning');
+                    btnGenerate.disabled = true;
+                }
+            } else {
+                scoreValidation.className = 'score-validation success';
+                scoreValidation.innerHTML = '✅ Score valide : Client accepté';
+                scoreValidation.style.background = '';
+                scoreValidation.style.color = '';
+                scoreValidation.style.border = '';
+                scoreInput.classList.add('success');
+                scoreInput.classList.remove('error', 'warning');
+                checkFormValidity();
+            }
+        }
+
+        scoreInput.addEventListener('input', validateScore);
+
+        // ============================================================
+        // 2. INITIALISATION DES DURÉES DISPONIBLES
+        // ============================================================
+        function initDurees() {
+            const dureeSelect = document.getElementById('duree_mois');
+            const dateDebutInput = document.getElementById('date_debut');
+            const dateDebutValue = dateDebutInput.value;
+
+            dureeSelect.innerHTML = '<option value="">-- Sélectionner une date de fin --</option>';
+
+            // Date maximum autorisée : 31/12/2029
+            const dateMaxAutorisee = new Date('2029-12-31');
+
+            // Si pas de date de début, ne rien afficher
+            if (!dateDebutValue) {
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = '⚠️ Veuillez d\'abord sélectionner une date de début';
+                dureeSelect.appendChild(option);
+                console.log('⚠️ Pas de date de début - dropdown date de fin vide');
+                return;
+            }
+
+            // Calculer les dates de fin valides en fonction de la date de début
+            const dateDebutObj = new Date(dateDebutValue);
+            let dureesAjoutees = 0;
+
+            // Calculer les mois de début pour éviter les problèmes de setMonth
+            const moisDebut = dateDebutObj.getMonth(); // 0-indexed
+            const anneeDebut = dateDebutObj.getFullYear();
+            const moisTotalDebut = anneeDebut * 12 + moisDebut;
+
+            for (let duree = 12; duree <= 47; duree++) {
+                // Calculer le mois et l'année de fin arithmétiquement
+                // -1 car le premier mois est inclusif (octobre à décembre 2029 = 39 mois)
+                const moisTotalFin = moisTotalDebut + duree - 1;
+                const anneeFin = Math.floor(moisTotalFin / 12);
+                const moisFin = moisTotalFin % 12; // 0-indexed
+
+                // Créer une date au dernier jour du mois calculé
+                const dernierJour = new Date(anneeFin, moisFin + 1, 0).getDate();
+                const dateFinObj = new Date(anneeFin, moisFin, dernierJour);
+
+                // Vérifier si date_fin <= 31/12/2029
+                if (dateFinObj <= dateMaxAutorisee) {
+                    // Formater la date de fin en DD/MM/YYYY
+                    const dateFinFormatted = `${String(dernierJour).padStart(2, '0')}/${String(moisFin + 1).padStart(2, '0')}/${anneeFin}`;
+
+                    const option = document.createElement('option');
+                    option.value = duree; // Valeur = nombre de mois (pour compatibilité backend)
+                    option.textContent = dateFinFormatted; // Affichage = date de fin
+                    dureeSelect.appendChild(option);
+                    dureesAjoutees++;
+                }
+            }
+
+            if (dureesAjoutees === 0) {
+                // Aucune durée valide - date de début trop proche de 2029
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = '⚠️ Date de début trop tardive (max: 31/12/2029)';
+                dureeSelect.appendChild(option);
+                console.log('⚠️ Date de début trop tardive - aucune durée valide');
+            } else {
+                console.log(`✅ ${dureesAjoutees} dates de fin valides (date fin max: 31/12/2029)`);
+            }
+        }
+
+        // ============================================================
+        // 3. LISTENER DATE DÉBUT - Réinitialiser durées quand date change
+        // ============================================================
+        const dateDebutInput = document.getElementById('date_debut');
+        dateDebutInput.addEventListener('change', function() {
+            // Réinitialiser les durées disponibles
+            initDurees();
+
+            // Réinitialiser la sélection de durée
+            document.getElementById('duree_mois').value = '';
+            document.getElementById('date_fin_display').value = '';
+            document.getElementById('date_fin').value = '';
+
+            console.log('📅 Date de début modifiée - durées réinitialisées');
+        });
+
+        // ============================================================
+        // 4. CALCUL AUTOMATIQUE DATE FIN
+        // ============================================================
+        const dureeMoisSelect = document.getElementById('duree_mois');
+        dureeMoisSelect.addEventListener('change', function() {
+            const dateDebut = document.getElementById('date_debut').value;
+            const dureeMois = parseInt(this.value);
+
+            if (dateDebut && dureeMois) {
+                // Convertir date_debut (YYYY-MM-DD format ISO) en objet Date
+                const dateDebutObj = new Date(dateDebut);
+                const moisDebut = dateDebutObj.getMonth(); // 0-indexed
+                const anneeDebut = dateDebutObj.getFullYear();
+                const jourDebut = dateDebutObj.getDate();
+
+                console.log(`🔍 DEBUG CALCUL DATE FIN:`);
+                console.log(`   Date début: ${jourDebut}/${moisDebut + 1}/${anneeDebut} (mois 0-indexed: ${moisDebut})`);
+                console.log(`   Durée: ${dureeMois} mois`);
+
+                // Calculer le mois et l'année de fin AVANT d'utiliser setMonth
+                const moisTotalDebut = anneeDebut * 12 + moisDebut;
+                // -1 car le premier mois est inclusif (même logique que initDurees)
+                const moisTotalFin = moisTotalDebut + dureeMois - 1;
+                const anneeFin = Math.floor(moisTotalFin / 12);
+                const moisFin = moisTotalFin % 12; // 0-indexed
+
+                console.log(`   Calcul: mois_total_debut=${moisTotalDebut}, mois_total_fin=${moisTotalFin}`);
+                console.log(`   Résultat: année_fin=${anneeFin}, mois_fin=${moisFin} (0-indexed)`);
+
+                // Créer la date de fin directement au dernier jour du mois
+                // Utiliser le dernier jour du mois calculé
+                const dernierJour = new Date(anneeFin, moisFin + 1, 0).getDate();
+                const dateFinObj = new Date(anneeFin, moisFin, dernierJour);
+
+                console.log(`   Dernier jour du mois ${moisFin + 1}/${anneeFin}: ${dernierJour}`);
+                console.log(`   Date fin créée: ${dateFinObj.getDate()}/${dateFinObj.getMonth() + 1}/${dateFinObj.getFullYear()}`);
+
+                // Vérifier date maximum : 31/12/2029
+                const dateMaxAutorisee = new Date('2029-12-31');
+                if (dateFinObj > dateMaxAutorisee) {
+                    showNotification('Date de fin maximum : 31/12/2029\n\nVeuillez sélectionner une durée plus courte ou modifier la date de début.', 'warning');
+                    this.value = '';
+                    document.getElementById('date_fin_display').value = '';
+                    document.getElementById('date_fin').value = '';
+                    return;
+                }
+
+                // Formater en dd/mm/yyyy
+                const dateFin = `${String(dateFinObj.getDate()).padStart(2, '0')}/${String(dateFinObj.getMonth() + 1).padStart(2, '0')}/${dateFinObj.getFullYear()}`;
+
+                document.getElementById('date_fin_display').value = dateFin;
+                document.getElementById('date_fin').value = dateFin;
+
+                console.log(`✅ Date fin calculée: ${dateFin} (dans les limites autorisées)`);
+
+                // Mettre à jour la commission totale quand durée change
+                updateCommissionTotale();
+            }
+        });
+
+        // ============================================================
+        // 5. SLIDER MARGE COURTIER
+        // ============================================================
+        const margeSlider = document.getElementById('marge_courtier');
+        const margeValue = document.getElementById('marge_value');
+
+        margeSlider.addEventListener('input', function() {
+            margeValue.textContent = parseFloat(this.value).toFixed(2);
+
+            // Mettre à jour le JSON prixP0Data avec la nouvelle marge
+            if (prixP0Data && prixP0Data.prix_p0) {
+                const nouvelleMarge = parseFloat(this.value);
+                prixP0Data.marge_courtier = nouvelleMarge;
+
+                // Recalculer prix_finaux avec la nouvelle marge
+                prixP0Data.prix_finaux = {};
+                for (const [key, prixP0] of Object.entries(prixP0Data.prix_p0)) {
+                    const posteKey = key.replace('prix_', ''); // "prix_pointe" → "pointe"
+                    prixP0Data.prix_finaux[posteKey] = parseFloat(prixP0) + nouvelleMarge;
+                }
+
+                // Mettre à jour l'aperçu
+                updatePrixPreview();
+            }
+
+            // Mettre à jour la commission totale
+            updateCommissionTotale();
+
+            // Pour C5 : recalculer les commissions de tous les sites
+            if (segment === 'C5') {
+                calculateSiteVolumes();
+            }
+        });
+
+        // ============================================================
+        // 6. CALCULER PRIX P0 ET AFFICHER APERÇU
+        // ============================================================
+        document.getElementById('btnCalculerPrix').addEventListener('click', async function() {
+            const dateDebutISO = document.getElementById('date_debut').value; // Format YYYY-MM-DD
+            const dureeMois = document.getElementById('duree_mois').value;
+            const dateFin = document.getElementById('date_fin').value;
+            const margeCourtier = parseFloat(margeSlider.value);
+
+            if (!dateDebutISO || !dureeMois || !dateFin) {
+                showNotification('Veuillez sélectionner la date de début et la durée du contrat.\n\n📅 Ces informations sont nécessaires pour calculer les prix de l\'énergie.', 'warning');
+                return;
+            }
+
+            try {
+                this.disabled = true;
+                this.innerHTML = '<div class="spinner"></div> Calcul en cours...';
+
+                // Arrondir au 1er du mois pour chercher les prix dans la grille
+                const dateDebutObj = new Date(dateDebutISO);
+                const dateGrilleObj = new Date(dateDebutObj.getFullYear(), dateDebutObj.getMonth(), 1);
+
+                // Formater en dd/mm/yyyy pour l'API
+                const dateDebut = `${String(dateDebutObj.getDate()).padStart(2, '0')}/${String(dateDebutObj.getMonth() + 1).padStart(2, '0')}/${dateDebutObj.getFullYear()}`;
+                const dateGrille = `${String(dateGrilleObj.getDate()).padStart(2, '0')}/${String(dateGrilleObj.getMonth() + 1).padStart(2, '0')}/${dateGrilleObj.getFullYear()}`;
+
+                console.log(`📅 Date sélectionnée: ${dateDebut}`);
+                console.log(`📅 Date grille (1er du mois): ${dateGrille}`);
+
+                const response = await fetch('/api/get_prix_p0', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        session_id: sessionId,
+                        segment: segment,
+                        date_debut: dateDebut,        // Date réelle pour le contrat
+                        date_grille: dateGrille,      // Date du 1er du mois pour les prix
+                        date_fin: dateFin,
+                        duree_mois: parseInt(dureeMois),
+                        marge_courtier: margeCourtier
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    prixP0Data = result;
+                    console.log('✅ prixP0Data après calcul:', prixP0Data);
+                    console.log('   → prix_p0:', prixP0Data.prix_p0);
+                    console.log('   → prix_finaux:', prixP0Data.prix_finaux);
+                    updatePrixPreview();
+                    document.getElementById('prix_preview').style.display = 'block';
+                    showNotification('Prix calculés avec succès !\n\n💰 Les prix de l\'énergie sont maintenant disponibles dans l\'aperçu ci-dessous.', 'success');
+                } else {
+                    showNotification('Erreur lors du calcul des prix\n\n' + result.error, 'error');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showNotification('Erreur lors du calcul des prix\n\n' + error.message, 'error');
+            } finally {
+                this.disabled = false;
+                this.innerHTML = '🔍 Calculer les Prix et Afficher l\'Aperçu';
+            }
+        });
+
+        // ============================================================
+        // 7. MISE À JOUR APERÇU PRIX
+        // ============================================================
+        function updatePrixPreview() {
+            if (!prixP0Data) return;
+
+            const margeCourtier = parseFloat(margeSlider.value);
+
+            // Pour C5 : filtrer les postes selon le type de calendrier
+            let postes;
+            if (segment === 'C5') {
+                const typeCalendrier = document.getElementById('type_calendrier_site')?.value;
+                if (typeCalendrier) {
+                    postes = getPostesForCalendrierC5(typeCalendrier);
+                } else {
+                    // Si pas de type de calendrier sélectionné, afficher tous les postes C5
+                    postes = getPostesForSegment(segment);
+                }
+            } else {
+                postes = getPostesForSegment(segment);
+            }
+
+            let html = '';
+
+            postes.forEach(poste => {
+                const prixP0Key = `prix_${poste.key}`;
+                const prixP0 = parseFloat(prixP0Data.prix_p0[prixP0Key] || 0);
+                const prixClient = prixP0 + margeCourtier;
+
+                html += `
+                    <tr>
+                        <td><strong>${poste.label}</strong></td>
+                        <td class="prix-p0">${prixP0.toFixed(2)} €/MWh</td>
+                        <td style="color: #ff9800; font-weight: 600;">+ ${margeCourtier.toFixed(2)} €/MWh</td>
+                        <td class="prix-client">${prixClient.toFixed(2)} €/MWh</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('prix_preview_body').innerHTML = html;
+
+            // Afficher coefficient alpha
+            if (prixP0Data.coefficient_alpha) {
+                document.getElementById('coeff_alpha_display').textContent = prixP0Data.coefficient_alpha;
+            }
+        }
+
+        // Fonction helper pour obtenir les postes selon le type de calendrier en C5
+        function getPostesForCalendrierC5(typeCalendrier) {
+            if (typeCalendrier === 'BASE') {
+                return [{key: 'base', label: 'BASE - Consommation Totale'}];
+            } else if (typeCalendrier === 'HP-HC') {
+                return [
+                    {key: 'hp', label: 'HP - Heures Pleines'},
+                    {key: 'hc', label: 'HC - Heures Creuses'}
+                ];
+            } else if (typeCalendrier === '4_cadrans') {
+                return [
+                    {key: 'hpsh', label: 'HPSH - HP Samedi Hiver'},
+                    {key: 'hcsh', label: 'HCSH - HC Samedi Hiver'},
+                    {key: 'hpsb', label: 'HPSB - HP Samedi Basse'},
+                    {key: 'hcsb', label: 'HCSB - HC Samedi Basse'}
+                ];
+            } else {
+                // Tous les postes par défaut
+                return getPostesForSegment('C5');
+            }
+        }
+
+        // ============================================================
+        // 8. GÉNÉRATION CHAMPS CONSOMMATION
+        // ============================================================
+        function generateConsoFields() {
+            const container = document.getElementById('consoFields');
+
+            if (segment === 'C5') {
+                // Pour C5 : les champs s'adaptent au type de calendrier sélectionné en section 3
+                // NOTE: Pas de "required" sur ces champs car ils sont temporaires (vidés après chaque site)
+                // La validation se fait dans addC5SiteFromForm(), pas lors de la soumission finale du formulaire
+                const typeCalendrier = document.getElementById('type_calendrier_site')?.value || '';
+
+                if (!typeCalendrier) {
+                    container.innerHTML = '<p style="color: #999; font-style: italic;">☝️ Choisissez d\'abord le type de calendrier en Section 3</p>';
+                    return;
+                }
+
+                let html = '<div class="form-grid">';
+
+                if (typeCalendrier === 'BASE') {
+                    html += `
+                        <div class="form-group">
+                            <label class="form-label required">⚡ Consommation annuelle BASE (MWh)</label>
+                            <input type="number" step="0.01" id="conso_base" name="conso_base" class="form-input conso-input" placeholder="0.00">
+                        </div>
+                    `;
+                } else if (typeCalendrier === 'HP-HC') {
+                    html += `
+                        <div class="form-group">
+                            <label class="form-label required">⚡ HP - Heures Pleines (MWh)</label>
+                            <input type="number" step="0.01" id="conso_hp" name="conso_hp" class="form-input conso-input" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">⚡ HC - Heures Creuses (MWh)</label>
+                            <input type="number" step="0.01" id="conso_hc" name="conso_hc" class="form-input conso-input" placeholder="0.00">
+                        </div>
+                    `;
+                } else if (typeCalendrier === '4_cadrans') {
+                    html += `
+                        <div class="form-group">
+                            <label class="form-label required">⚡ HPSH (MWh)</label>
+                            <input type="number" step="0.01" id="conso_hpsh" name="conso_hpsh" class="form-input conso-input" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">⚡ HCSH (MWh)</label>
+                            <input type="number" step="0.01" id="conso_hcsh" name="conso_hcsh" class="form-input conso-input" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">⚡ HPSB (MWh)</label>
+                            <input type="number" step="0.01" id="conso_hpsb" name="conso_hpsb" class="form-input conso-input" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">⚡ HCSB (MWh)</label>
+                            <input type="number" step="0.01" id="conso_hcsb" name="conso_hcsb" class="form-input conso-input" placeholder="0.00">
+                        </div>
+                    `;
+                }
+
+                html += '</div>';
+                container.innerHTML = html;
+
+                // Event delegation sera géré par le listener global sur consoFields
+            } else {
+                // Pour C2/C4 : afficher les champs CAR classiques
+                const postes = getPostesForSegment(segment);
+                let html = '<div class="form-grid">';
+
+                postes.forEach(poste => {
+                    html += `
+                        <div class="form-group">
+                            <label class="form-label required">${poste.label} (MWh)</label>
+                            <input type="number" step="0.01" name="conso_${poste.key}"
+                                   id="conso_${poste.key}" class="form-input conso-input"
+                                   placeholder="0.00" required>
+                        </div>
+                    `;
+                });
+
+                html += '</div>';
+                container.innerHTML = html;
+
+                // Event delegation sera géré par le listener global sur consoFields
+            }
+        }
+
+        // ============================================================
+        // NOUVELLES FONCTIONS C5 - WORKFLOW SECTIONS 3-4-5
+        // ============================================================
+
+        // Afficher/masquer le dropdown "Type de calendrier" selon le segment
+        function updateTypeCalendrierVisibility() {
+            const typeCalendrierSection = document.getElementById('type_calendrier_section');
+            const typeCalendrierSelect = document.getElementById('type_calendrier_site');
+            const siteInfoForm = document.getElementById('site_info_form');
+            const ftaField = document.getElementById('site_fta');
+
+            // BUG FIX: Le formulaire de saisie doit TOUJOURS être visible (multi-segment)
+            siteInfoForm.style.display = 'block';
+
+            if (segment === 'C5') {
+                typeCalendrierSection.style.display = 'block';
+
+                // En C5, le FTA est toujours "BT ≤ 36 kVA" par définition
+                // Pré-remplir et désactiver le champ
+                if (ftaField) {
+                    ftaField.value = 'BT ≤ 36 kVA';
+                    ftaField.disabled = true;
+                    ftaField.style.backgroundColor = '#f0f0f0';
+                    ftaField.style.cursor = 'not-allowed';
+                }
+
+                // Réinitialiser le calendrier pour forcer l'utilisateur à choisir
+                if (typeCalendrierSelect) {
+                    typeCalendrierSelect.value = '';
+                }
+            } else {
+                typeCalendrierSection.style.display = 'none';
+
+                // FIX 1: Mettre une valeur par défaut pour C2/C4 (ne sera pas validée)
+                if (typeCalendrierSelect) {
+                    typeCalendrierSelect.value = 'BASE';  // Valeur par défaut pour C2/C4
+                }
+
+                // Réactiver le champ FTA pour les autres segments
+                if (ftaField) {
+                    ftaField.disabled = false;
+                    ftaField.style.backgroundColor = '';
+                    ftaField.style.cursor = '';
+                }
+            }
+        }
+
+        // Quand le type de calendrier change, regénérer la section 4
+        function onTypeCalendrierChange() {
+            generateConsoFields();
+        }
+
+        // Ajouter un site C5 depuis le formulaire de la section 5
+        function addC5SiteFromForm() {
+            // Récupérer toutes les données des sections 3, 4, 5
+
+            // Détecter le segment actuel pour gérer tous les cas (C2, C4, C5)
+            const currentSegment = segment || document.getElementById('segment_display')?.value || 'C5';
+
+            // Section 3 : dates et type de calendrier
+            let typeCalendrier = '';
+
+            // Gérer le type de calendrier selon le segment
+            if (currentSegment === 'C5') {
+                // Pour C5, l'utilisateur sélectionne le calendrier dans le dropdown
+                typeCalendrier = document.getElementById('type_calendrier_site')?.value || '';
+                if (!typeCalendrier || typeCalendrier === '') {
+                    showNotification('Veuillez choisir un type de calendrier en Section 3.\n\n📊 Sélectionnez le type de calendrier (HP-HC ou 5 Cadrans) avant de continuer.', 'warning');
+                    return;
+                }
+            } else if (currentSegment === 'C2') {
+                // C2 utilise toujours 5 cadrans
+                typeCalendrier = '5_cadrans';
+            } else if (currentSegment === 'C4') {
+                // C4 utilise toujours 4 cadrans
+                typeCalendrier = '4_cadrans';
+            }
+
+            const dateDebut = document.getElementById('date_debut')?.value || '';
+            const dateFin = document.getElementById('date_fin')?.value || '';
+
+            if (!dateDebut || !dateFin) {
+                showNotification('Veuillez sélectionner une date de début et une durée en Section 3.\n\n📅 Ces informations sont nécessaires pour ajouter un site au tableau.', 'warning');
+                return;
+            }
+
+            // Section 4 : CAR - Calculer depuis les champs de saisie VISIBLES (pas depuis l'affichage)
+            let car = 0;
+            const carInputs = [];
+            document.querySelectorAll('.conso-input').forEach(input => {
+                if (input.offsetParent !== null) {  // Seulement les champs visibles
+                    const value = parseFloat(input.value || 0);
+                    car += value;
+                    carInputs.push({name: input.name || input.id, value});
+                }
+            });
+
+            console.log('🔍 Validation CAR:', {
+                typeCalendrier,
+                car,
+                champsVisibles: carInputs,
+                displayText: document.getElementById('currentTotal')?.textContent
+            });
+
+            if (car === 0) {
+                showNotification('Veuillez remplir les champs de consommation (CAR) en Section 4.\n\n⚡ Saisissez les volumes annuels de consommation pour ce site.', 'warning');
+                return;
+            }
+
+            // Collecter les détails CAR depuis les champs visibles pour le stockage
+            let carDetails = {};
+            if (typeCalendrier === 'BASE') {
+                carDetails = {base: parseFloat(document.getElementById('conso_base')?.value || '0') || 0};
+            } else if (typeCalendrier === 'HP-HC') {
+                carDetails = {
+                    hp: parseFloat(document.getElementById('conso_hp')?.value || '0') || 0,
+                    hc: parseFloat(document.getElementById('conso_hc')?.value || '0') || 0
+                };
+            } else if (typeCalendrier === '4_cadrans') {
+                carDetails = {
+                    hpsh: parseFloat(document.getElementById('conso_hpsh')?.value || '0') || 0,
+                    hcsh: parseFloat(document.getElementById('conso_hcsh')?.value || '0') || 0,
+                    hpsb: parseFloat(document.getElementById('conso_hpsb')?.value || '0') || 0,
+                    hcsb: parseFloat(document.getElementById('conso_hcsb')?.value || '0') || 0
+                };
+            } else if (typeCalendrier === '5_cadrans') {
+                carDetails = {
+                    hph: parseFloat(document.getElementById('conso_hph')?.value || '0') || 0,
+                    hch: parseFloat(document.getElementById('conso_hch')?.value || '0') || 0,
+                    hpe: parseFloat(document.getElementById('conso_hpe')?.value || '0') || 0,
+                    hce: parseFloat(document.getElementById('conso_hce')?.value || '0') || 0,
+                    p: parseFloat(document.getElementById('conso_p')?.value || '0') || 0
+                };
+            }
+
+            // Section 5 : Infos du site - Protéger tous les accès avec ?.value
+            const prm = document.getElementById('site_prm')?.value || '';
+            const siret = document.getElementById('site_siret')?.value || '';
+            const naf = document.getElementById('site_naf')?.value || '';
+            const adresse = document.getElementById('site_adresse')?.value || '';
+            const fta = document.getElementById('site_fta')?.value || '';
+            const puissance = document.getElementById('site_puissance')?.value || '';
+
+            if (!prm || !siret || !naf || !adresse || !fta || !puissance) {
+                showNotification('Veuillez remplir tous les champs du site en Section 5.\n\n🏢 Les informations complètes du site sont nécessaires (PRM, SIRET, NAF, Adresse, FTA, Puissance).', 'warning');
+                return;
+            }
+
+            // VALIDATION CRITIQUE : Vérifier que les prix ont été calculés
+            if (!prixP0Data || !prixP0Data.prix_finaux) {
+                showNotification('Veuillez cliquer sur "Calculer les Prix" avant d\'ajouter le site au tableau.\n\n🔍 Les prix de l\'énergie doivent être calculés pour chaque site.', 'warning');
+                console.error('🚫 Prix manquants - prixP0Data:', prixP0Data);
+                return;
+            }
+
+            console.log('✅ Validation prix OK:', {
+                segment: currentSegment,
+                has_prix_finaux: !!prixP0Data.prix_finaux,
+                prix_keys: Object.keys(prixP0Data.prix_finaux || {})
+            });
+
+            // VALIDATION : Même calendrier = même date de début ET même date de fin
+            // (Le Tableau 2 ne peut afficher qu'un seul jeu de prix par calendrier)
+
+            // Fonction helper pour normaliser les dates au format ISO (YYYY-MM-DD)
+            function normalizeDate(dateStr) {
+                if (!dateStr) return '';
+                // Si c'est déjà ISO (YYYY-MM-DD)
+                if (dateStr.match(/^\d{4}-\d{2}-\d{2}$/)) return dateStr;
+                // Si c'est FR (DD/MM/YYYY)
+                const parts = dateStr.split('/');
+                if (parts.length === 3) {
+                    return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+                }
+                return dateStr;
+            }
+
+            // Normaliser les dates du nouveau site
+            const newDateDebutNorm = normalizeDate(dateDebut);
+            const newDateFinNorm = normalizeDate(dateFin);
+
+            const existingRows = document.querySelectorAll('#prm_table_body tr');
+            for (const row of existingRows) {
+                // Ignorer les lignes d'info et de résumé
+                if (row.classList.contains('site-info-row') || row.id === 'sites_summary_row') {
+                    continue;
+                }
+
+                const existingCal = row.querySelector('select[name^="type_calendrier_"]')?.value ||
+                                    row.querySelector('input[name^="type_calendrier_"]')?.value || '';
+                const existingSeg = row.querySelector('input[name^="site_"][name$="_segment"]')?.value || '';
+                const existingDateDebut = normalizeDate(row.querySelector('input[name^="date_debut_site_"]')?.value || '');
+                const existingDateFin = normalizeDate(row.querySelector('input[name^="date_fin_site_"]')?.value || '');
+
+                // Même segment + même calendrier + (date début OU date fin différente) = bloqué
+                if (existingSeg === currentSegment && existingCal === typeCalendrier) {
+                    if (existingDateDebut !== newDateDebutNorm || existingDateFin !== newDateFinNorm) {
+                        showNotification(`Un site ${currentSegment} en ${typeCalendrier} existe déjà avec des dates différentes.\n\nPour ajouter un site sur le même calendrier, les dates de début ET de fin doivent être identiques.\n\n📅 Existant : ${existingDateDebut} → ${existingDateFin}\n📅 Nouveau : ${newDateDebutNorm} → ${newDateFinNorm}\n\n💡 Options :\n• Utilisez les mêmes dates\n• Supprimez le site existant\n• Créez un nouveau contrat`, 'warning');
+                        return;
+                    }
+                }
+            }
+
+            // Convertir les dates au format ISO pour le backend
+            const dateDebutISO = formatDateToISO(dateDebut);
+            const dateFinISO = formatDateToISO(dateFin);
+
+            // DEBUG: Logger la CAR AVANT addSiteRow
+            console.log(`💾 CAR sauvegardée AVANT addSiteRow: ${car} MWh`, {
+                car,
+                carDetails,
+                prm,
+                typeCalendrier,
+                currentSegment
+            });
+
+            // Ajouter le site au tableau (CEE est maintenant géré globalement en section 6)
+            // IMPORTANT : Passer le segment actuel et une copie profonde de prixP0Data pour éviter les bugs
+            const prixP0Copy = prixP0Data ? JSON.parse(JSON.stringify(prixP0Data)) : null;
+            addSiteRow(prm, siret, naf, adresse, typeCalendrier, fta, puissance, dateDebutISO, dateFinISO, car, carDetails, currentSegment, prixP0Copy);
+
+            console.log(`✅ Site ajouté au tableau avec CAR = ${car} MWh`);
+
+            // Vider toutes les sections pour le site suivant
+            clearSectionsForNextSite();
+
+            // Recalculer les totaux (appelle aussi updateC5RequiredFields() qui affiche le message de succès)
+            calculateSiteVolumes();
+
+            // C5 WORKFLOW FIX: Après ajout d'un site, vérifier s'il reste des sites à pré-remplir
+            afterSiteAdded();
+        }
+
+        // Fonction pour convertir une date dd/mm/yyyy en yyyy-mm-dd
+        function formatDateToISO(dateStr) {
+            if (!dateStr) return '';
+            const parts = dateStr.split('/');
+            if (parts.length === 3) {
+                return `${parts[2]}-${parts[1]}-${parts[0]}`;
+            }
+            return dateStr; // Si déjà au bon format
+        }
+
+        // Vider les sections 3, 4, 5 pour le site suivant
+        function clearSectionsForNextSite() {
+            // Section 3 : vider les dates et le type de calendrier - Protéger avec ?.
+            const typeCalendrierElem = document.getElementById('type_calendrier_site');
+            if (typeCalendrierElem) typeCalendrierElem.value = '';
+
+            const dateDebutElem = document.getElementById('date_debut');
+            if (dateDebutElem) dateDebutElem.value = '';
+
+            const dureeMoisElem = document.getElementById('duree_mois');
+            if (dureeMoisElem) dureeMoisElem.value = '';
+            // BUG FIX C5: NE PAS désactiver duree_mois pour permettre la saisie du 2ème site
+            // document.getElementById('duree_mois').disabled = true;  // SUPPRIMÉ
+
+            const dateFinDisplayElem = document.getElementById('date_fin_display');
+            if (dateFinDisplayElem) dateFinDisplayElem.value = '';
+
+            const dateFinElem = document.getElementById('date_fin');
+            if (dateFinElem) dateFinElem.value = '';
+
+            // Masquer l'aperçu des prix
+            const prixPreviewElem = document.getElementById('prix_preview');
+            if (prixPreviewElem) prixPreviewElem.style.display = 'none';
+            prixP0Data = null;
+
+            // Section 4 : vider les champs CAR
+            const consoFieldsElem = document.getElementById('consoFields');
+            if (consoFieldsElem) {
+                consoFieldsElem.innerHTML = '<p style="color: #999; font-style: italic;">☝️ Choisissez d\'abord le type de calendrier en Section 3</p>';
+            }
+
+            const currentTotalElem = document.getElementById('currentTotal');
+            if (currentTotalElem) currentTotalElem.textContent = '0.00';
+
+            // Vider explicitement tous les champs de consommation CAR
+            document.querySelectorAll('.conso-input').forEach(input => {
+                input.value = '';
+            });
+
+            // Section 5 : vider les champs d'infos du site
+            const sitePrmElem = document.getElementById('site_prm');
+            if (sitePrmElem) sitePrmElem.value = '';
+
+            const siteSiretElem = document.getElementById('site_siret');
+            if (siteSiretElem) siteSiretElem.value = '';
+
+            const siteNafElem = document.getElementById('site_naf');
+            if (siteNafElem) siteNafElem.value = '';
+
+            const siteAdresseElem = document.getElementById('site_adresse');
+            if (siteAdresseElem) siteAdresseElem.value = '';
+
+            // En C5, remettre FTA à "BT ≤ 36 kVA" par défaut (pas à vide)
+            const siteFtaElem = document.getElementById('site_fta');
+            if (siteFtaElem) siteFtaElem.value = 'BT ≤ 36 kVA';
+
+            const sitePuissanceElem = document.getElementById('site_puissance');
+            if (sitePuissanceElem) sitePuissanceElem.value = '';
+            // Note: CEE est maintenant global (Section 6), plus besoin de le réinitialiser par site
+
+            console.log('✅ Sections 3, 4, 5 vidées pour le site suivant');
+        }
+
+        // ============================================================
+        // C5 WORKFLOW: Fonctions pour pré-remplissage séquentiel
+        // ============================================================
+
+        // Pré-remplir les champs du formulaire de saisie (zone orange) avec les données d'un site
+        // N'AJOUTE PAS le site au tableau - l'utilisateur doit cliquer "Ajouter ce Site au Tableau"
+        function prefillSiteForm(siteData) {
+            if (!siteData) return;
+
+            console.log(`🔄 Pré-remplissage du formulaire avec site ${currentSiteIndex + 1}/${sitesFromRGPD.length}:`, siteData);
+
+            // Section 3 : Type de calendrier (déclenche la génération des champs CAR)
+            if (siteData.type_calendrier) {
+                const typeCalendrierElem = document.getElementById('type_calendrier_site');
+                if (typeCalendrierElem) {
+                    typeCalendrierElem.value = siteData.type_calendrier;
+                    // Déclencher l'événement change pour régénérer les champs CAR
+                    typeCalendrierElem.dispatchEvent(new Event('change'));
+                }
+            }
+
+            // Section 5 : Informations du site (zone orange)
+            console.log('🔍 DEBUG - Remplissage des champs Section 5:');
+            if (siteData.prm) {
+                const prmElem = document.getElementById('site_prm');
+                if (prmElem) {
+                    prmElem.value = siteData.prm;
+                    console.log(`  ✓ PRM: ${siteData.prm}`);
+                }
+            } else {
+                console.log('  ⚠️ PRM: vide ou absent');
+            }
+            if (siteData.siret) {
+                const siretElem = document.getElementById('site_siret');
+                if (siretElem) {
+                    siretElem.value = siteData.siret;
+                    console.log(`  ✓ SIRET: ${siteData.siret}`);
+                }
+            } else {
+                console.log('  ⚠️ SIRET: vide ou absent');
+            }
+            if (siteData.naf) {
+                const nafElem = document.getElementById('site_naf');
+                if (nafElem) {
+                    nafElem.value = siteData.naf;
+                    console.log(`  ✓ NAF: ${siteData.naf}`);
+                }
+            } else {
+                console.log('  ⚠️ NAF: vide ou absent');
+            }
+            if (siteData.adresse) {
+                const adresseElem = document.getElementById('site_adresse');
+                if (adresseElem) {
+                    adresseElem.value = siteData.adresse;
+                    console.log(`  ✓ Adresse: ${siteData.adresse}`);
+                }
+            } else {
+                console.log('  ⚠️ Adresse: vide ou absente');
+            }
+            if (siteData.fta) {
+                const ftaElem = document.getElementById('site_fta');
+                if (ftaElem) {
+                    ftaElem.value = siteData.fta;
+                    console.log(`  ✓ FTA: ${siteData.fta}`);
+                }
+            } else {
+                console.log('  ⚠️ FTA: vide ou absent');
+            }
+            if (siteData.puissance) {
+                const puissanceElem = document.getElementById('site_puissance');
+                if (puissanceElem) {
+                    puissanceElem.value = siteData.puissance;
+                    console.log(`  ✓ Puissance: ${siteData.puissance}`);
+                }
+            } else {
+                console.log('  ⚠️ Puissance: vide ou absente');
+            }
+
+            console.log(`✅ Formulaire pré-rempli. L'utilisateur peut maintenant choisir dates, CAR et marges, puis cliquer "Ajouter ce Site au Tableau".`);
+        }
+
+        // Après l'ajout d'un site au tableau : vérifier s'il reste des sites à ajouter
+        // Si oui, pré-remplir automatiquement le formulaire avec le site suivant
+        function afterSiteAdded() {
+            currentSiteIndex++;
+
+            if (currentSiteIndex < sitesFromRGPD.length) {
+                // Il reste des sites à ajouter
+                console.log(`🔄 Site ${currentSiteIndex}/${sitesFromRGPD.length} ajouté. Pré-remplissage automatique du site suivant...`);
+
+                // Afficher un message à l'utilisateur
+                const alertDiv = document.getElementById('alerts');
+                if (alertDiv) {
+                    alertDiv.innerHTML = `
+                        <div style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+                                    border-left: 5px solid #FF9800;
+                                    padding: 20px;
+                                    border-radius: 12px;
+                                    margin: 20px 0;
+                                    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.2);">
+                            <h3 style="color: #E65100; margin-bottom: 10px; font-size: 1.2em;">
+                                📋 Site ${currentSiteIndex}/${sitesFromRGPD.length} pré-rempli automatiquement
+                            </h3>
+                            <p style="color: #666; margin: 0;">
+                                Le formulaire a été pré-rempli avec le site suivant.
+                                Complétez les dates, les volumes CAR et la marge, puis cliquez sur
+                                <strong>"Calculer les Prix"</strong> puis <strong>"Ajouter ce Site au Tableau"</strong>.
+                            </p>
+                        </div>
+                    `;
+                }
+
+                // Pré-remplir avec le site suivant
+                prefillSiteForm(sitesFromRGPD[currentSiteIndex]);
+            } else {
+                // Tous les sites ont été ajoutés
+                console.log(`✅ Tous les ${sitesFromRGPD.length} sites ont été ajoutés au tableau.`);
+
+                const alertDiv = document.getElementById('alerts');
+                if (alertDiv) {
+                    alertDiv.innerHTML = `
+                        <div style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+                                    border-left: 5px solid #28a745;
+                                    padding: 20px;
+                                    border-radius: 12px;
+                                    margin: 20px 0;
+                                    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);">
+                            <h3 style="color: #155724; margin-bottom: 10px; font-size: 1.2em;">
+                                ✅ Tous les sites ont été ajoutés avec succès !
+                            </h3>
+                            <p style="color: #155724; margin: 0;">
+                                Vous pouvez maintenant générer votre CPV en cliquant sur le bouton "Générer le CPV" en bas de page.
+                            </p>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        function getPostesForSegment(seg) {
+            if (seg === 'C2') {
+                return [
+                    {key: 'pte', label: 'PTE - Pointe'},
+                    {key: 'hph', label: 'HPH - Heures Pleines Hiver'},
+                    {key: 'hch', label: 'HCH - Heures Creuses Hiver'},
+                    {key: 'hpe', label: 'HPE - Heures Pleines Été'},
+                    {key: 'hce', label: 'HCE - Heures Creuses Été'}
+                ];
+            } else if (seg === 'C4') {
+                return [
+                    {key: 'hph', label: 'HPH - Heures Pleines Hiver'},
+                    {key: 'hch', label: 'HCH - Heures Creuses Hiver'},
+                    {key: 'hpe', label: 'HPE - Heures Pleines Été'},
+                    {key: 'hce', label: 'HCE - Heures Creuses Été'}
+                ];
+            } else { // C5
+                return [
+                    {key: 'base', label: 'BASE - Consommation Totale'},
+                    {key: 'hp', label: 'HP - Heures Pleines'},
+                    {key: 'hc', label: 'HC - Heures Creuses'},
+                    {key: 'hpsh', label: 'HPSH - HP Samedi Hiver'},
+                    {key: 'hcsh', label: 'HCSH - HC Samedi Hiver'},
+                    {key: 'hpsb', label: 'HPSB - HP Samedi Basse'},
+                    {key: 'hcsb', label: 'HCSB - HC Samedi Basse'}
+                ];
+            }
+        }
+
+        function updateConsoTotal() {
+            let total = 0;
+            consommations = {};
+
+            // DEBUG: Afficher tous les champs trouvés
+            const inputs = document.querySelectorAll('.conso-input');
+            console.log(`🔍 updateConsoTotal: ${inputs.length} champs .conso-input trouvés`);
+
+            // Pour tous les segments (C2, C4, C5) : somme des postes détaillés
+            inputs.forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                total += value;
+
+                // Extraire la clé depuis name ou id de façon sécurisée
+                const key = (input.name || input.id || '').replace('conso_', '').replace('car_', '');
+                if (key) {
+                    consommations[key] = value;
+                }
+
+                // DEBUG
+                if (value > 0) {
+                    console.log(`   → ${input.id || input.name}: ${value} MWh (key: ${key})`);
+                }
+            });
+
+            console.log(`   ✅ CAR Totale: ${total.toFixed(2)} MWh`);
+
+            // DEBUG: Vérifier si l'élément existe avant de le mettre à jour
+            const currentTotalElement = document.getElementById('currentTotal');
+            if (currentTotalElement) {
+                currentTotalElement.textContent = total.toFixed(2);
+                console.log(`   ✅ Affichage mis à jour: #currentTotal = ${total.toFixed(2)}`);
+            } else {
+                console.error('   ❌ ERREUR: Élément #currentTotal introuvable!');
+            }
+
+            // Mettre à jour la commission totale quand CAR change
+            updateCommissionTotale();
+        }
+
+        // ============================================================
+        // CALCUL COMMISSION TOTALE EN TEMPS RÉEL
+        // ============================================================
+        function updateCommissionTotale() {
+            // Récupérer les valeurs
+            const marge = parseFloat(document.getElementById('marge_courtier').value) || 0;
+            const dureeMois = parseInt(document.getElementById('duree_mois').value) || 0;
+
+            // Calculer le CAR total depuis les inputs .conso-input visibles de la section 4
+            let carTotal = 0;
+            document.querySelectorAll('.conso-input').forEach(input => {
+                // Ne compter que les champs visibles (offsetParent !== null)
+                if (input.offsetParent !== null) {
+                    carTotal += parseFloat(input.value) || 0;
+                }
+            });
+
+            // Formule : Commission = (Marge / 2) × CAR × (Durée / 12)
+            // La marge est partagée 50/50 avec le fournisseur
+            const commission = (marge / 2) * carTotal * (dureeMois / 12);
+
+            // Afficher le résultat (avec vérification null pour éviter erreur si élément supprimé)
+            const commissionTotaleEl = document.getElementById('commission_totale');
+            if (commissionTotaleEl) {
+                commissionTotaleEl.textContent = Math.round(commission).toLocaleString('fr-FR');
+            }
+
+            // ⚠️ IMPORTANT: Ne PAS appeler calculateSiteVolumes() ici
+            // C'est cet appel qui causait le bug CAR BASE (réinitialisait currentTotal à 0)
+            // calculateSiteVolumes() sera appelé uniquement lors de l'ajout d'un site au tableau
+
+            // Afficher la formule avec les valeurs (avec vérification null)
+            const formuleText = `(${marge.toFixed(2)} / 2) €/MWh × ${carTotal.toFixed(2)} MWh × (${dureeMois} mois / 12)`;
+            const commissionFormulaEl = document.getElementById('commission_formula');
+            if (commissionFormulaEl) {
+                commissionFormulaEl.textContent = formuleText;
+            }
+        }
+
+        // ============================================================
+        // 9. TABLEAU DYNAMIQUE SITES PRM
+        // ============================================================
+
+        // Mettre à jour l'en-tête du tableau en fonction du segment
+        function updateTableHeader() {
+            // BUG FIX: Tableau unifié pour contrats multi-segments
+            // Affiche TOUJOURS toutes les colonnes (Segment + Type Calendrier)
+            const thead = document.querySelector('#prm_table thead tr');
+            thead.innerHTML = `
+                <th style="width: 120px;">PRM (14 chiffres)</th>
+                <th style="width: 120px;">SIRET (14 chiffres)</th>
+                <th style="width: 80px;">Code NAF</th>
+                <th style="width: 150px;">Adresse du Site</th>
+                <th style="width: 70px;">Segment</th>
+                <th style="width: 90px;">Type Calendrier</th>
+                <th style="width: 80px;">FTA</th>
+                <th style="width: 85px;">Puissance (kVA)</th>
+                <th style="width: 95px;">Date Début</th>
+                <th style="width: 95px;">Date Fin</th>
+                <th style="width: 85px;">CAR (MWh/an)</th>
+                <th style="width: 95px;">Commission (€)</th>
+                <th style="width: 70px;">Action</th>
+            `;
+        }
+
+        function addSiteRow(prm = '', siret = '', naf = '', adresse = '', type_calendrier = '', fta = '', puissance = '', date_debut_site = '', date_fin_site = '', car = '', carDetails = {}, siteSegment = null, prixP0SiteData = null) {
+            console.log(`🔧 addSiteRow appelé avec CAR = "${car}" (type: ${typeof car})`, {
+                car,
+                prm,
+                type_calendrier,
+                carDetails
+            });
+
+            // Utiliser le segment passé en paramètre, ou fallback sur la variable globale
+            const currentSiteSegment = siteSegment || segment;
+
+            siteCount++;
+            const tbody = document.getElementById('prm_table_body');
+            const row = tbody.insertRow();
+            row.id = `site_row_${siteCount}`;
+
+            // Stocker les détails CAR dans un attribut data- pour C5
+            if (currentSiteSegment === 'C5' && carDetails && Object.keys(carDetails).length > 0) {
+                row.dataset.carDetails = JSON.stringify(carDetails);
+            }
+
+            // Pour C5, pré-remplir avec les dates globales si vides
+            if (currentSiteSegment === 'C5') {
+                if (!date_debut_site) date_debut_site = document.getElementById('date_debut')?.value || '';
+                if (!date_fin_site) date_fin_site = document.getElementById('date_fin')?.value || '';
+            }
+
+            // TABLEAU UNIFIÉ : Toutes les colonnes pour tous les segments
+            // Ordre : PRM, SIRET, NAF, Adresse, Segment, Type Calendrier, FTA, Puissance, Date Début, Date Fin, CAR, Commission, Action
+
+            // Colonne PRM
+            let html = `
+                <td>
+                    <input type="hidden" name="site_${siteCount}_segment" value="${currentSiteSegment}">
+                    <input type="hidden" name="prix_p0_site_${siteCount}" value='${prixP0SiteData ? JSON.stringify(prixP0SiteData) : ''}'>
+                    <input type="hidden" name="car_detail_site_${siteCount}" value='${JSON.stringify(carDetails)}'>
+                    <input type="text" name="prm_${siteCount}" class="prm-input"
+                           pattern="\\d{14}" maxlength="14"
+                           placeholder="14 chiffres" value="${prm}" required>
+                </td>
+            `;
+
+            // Colonne SIRET
+            html += `
+                <td>
+                    <input type="text" name="siret_${siteCount}"
+                           pattern="\\d{14}" maxlength="14"
+                           placeholder="14 chiffres" value="${siret}" required>
+                </td>
+            `;
+
+            // Colonne NAF
+            html += `
+                <td>
+                    <input type="text" name="naf_${siteCount}"
+                           pattern="\\d{4}[A-Z]" maxlength="5"
+                           placeholder="Ex: 5610A" value="${naf}" required>
+                </td>
+            `;
+
+            // Colonne Adresse
+            html += `
+                <td>
+                    <input type="text" name="adresse_site_${siteCount}"
+                           placeholder="Adresse complète" value="${adresse}" required>
+                </td>
+            `;
+
+            // Colonne SEGMENT (visible pour tous)
+            html += `
+                <td style="text-align: center; font-weight: 600; font-size: 0.9em;">
+                    ${currentSiteSegment}
+                </td>
+            `;
+
+            // Colonne Type Calendrier (afficher "-" pour C2/C4, dropdown pour C5)
+            if (currentSiteSegment === 'C5') {
+                html += `
+                <td>
+                    <select name="type_calendrier_${siteCount}" required>
+                        <option value="">--</option>
+                        <option value="BASE" ${type_calendrier === 'BASE' ? 'selected' : ''}>BASE</option>
+                        <option value="HP-HC" ${type_calendrier === 'HP-HC' ? 'selected' : ''}>HP-HC</option>
+                        <option value="4_cadrans" ${type_calendrier === '4_cadrans' ? 'selected' : ''}>4 cadrans</option>
+                    </select>
+                </td>
+                `;
+            } else {
+                // Pour C2/C4, afficher un texte plus lisible
+                let typeCalendrierDisplay = '-';
+                if (type_calendrier) {
+                    // Convertir les codes techniques en affichage lisible
+                    if (type_calendrier === '5_cadrans') {
+                        typeCalendrierDisplay = '-'; // C2 utilise 5 cadrans mais on affiche "-"
+                    } else if (type_calendrier === '4_cadrans') {
+                        typeCalendrierDisplay = '-'; // C4 utilise 4 cadrans mais on affiche "-"
+                    } else {
+                        typeCalendrierDisplay = type_calendrier; // Autres cas : afficher tel quel
+                    }
+                }
+                html += `
+                <td style="text-align: center; color: #666; font-size: 0.9em;">
+                    <input type="hidden" name="type_calendrier_${siteCount}" value="${type_calendrier}">
+                    ${typeCalendrierDisplay}
+                </td>
+                `;
+            }
+
+            // Colonne FTA
+            html += `
+                <td>
+                    <select name="fta_${siteCount}" required>
+                        <option value="">--</option>
+                        <option value="BT ≤ 36 kVA" ${fta === 'BT ≤ 36 kVA' ? 'selected' : ''}>BT ≤ 36 kVA</option>
+                        <option value="BT > 36 kVA" ${fta === 'BT > 36 kVA' ? 'selected' : ''}>BT > 36 kVA</option>
+                        <option value="HTA" ${fta === 'HTA' ? 'selected' : ''}>HTA</option>
+                    </select>
+                </td>
+            `;
+
+            // Colonne Puissance
+            html += `
+                <td>
+                    <input type="number" step="0.01" name="puissance_${siteCount}"
+                           placeholder="kVA" value="${puissance}" required>
+                </td>
+            `;
+
+            // Colonnes Date Début, Date Fin, CAR, Commission (pour tous les segments)
+            html += `
+                <td>
+                    <input type="date" name="date_debut_site_${siteCount}" class="site-date-input"
+                           value="${date_debut_site}" required>
+                </td>
+                <td>
+                    <input type="date" name="date_fin_site_${siteCount}" class="site-date-input"
+                           value="${date_fin_site}" required>
+                </td>
+                <td>
+                    <input type="number" step="0.01" name="car_${siteCount}" class="car-input"
+                           placeholder="MWh/an" value="${car}" required>
+                </td>
+                <td>
+                    <span class="commission-display" id="commission_site_${siteCount}" style="font-weight: 600; color: #4CAF50;">0 €</span>
+                </td>
+            `;
+
+            // Colonne Action
+            html += `
+                <td>
+                    <button type="button" onclick="removeSite(${siteCount})" style="background-color: #dc3545; color: white; border: none; border-radius: 4px; width: 32px; height: 32px; font-size: 18px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;" title="Supprimer ce site">✕</button>
+                </td>
+            `;
+
+            row.innerHTML = html;
+
+            // DEBUG: Vérifier que la CAR a bien été écrite dans le DOM
+            const carInputWritten = row.querySelector(`input[name="car_${siteCount}"]`);
+            console.log(`✍️  CAR écrite dans le DOM:`, {
+                siteCount,
+                inputFound: !!carInputWritten,
+                valueAttribute: carInputWritten?.getAttribute('value'),
+                valueProp: carInputWritten?.value,
+                carParam: car
+            });
+
+            // Validation PRM/SIRET/NAF en temps réel
+            row.querySelector('.prm-input').addEventListener('input', function() {
+                validatePRM(this);
+            });
+
+            // Ajouter listeners pour recalcul automatique (tous segments maintenant)
+            row.querySelectorAll('.site-date-input, .car-input').forEach(input => {
+                input.addEventListener('input', calculateSiteVolumes);
+            });
+        }
+
+        // ============================================================
+        // GESTION CHAMPS REQUIRED SECTION 3 EN C5
+        // ============================================================
+        function updateC5RequiredFields() {
+            if (segment !== 'C5') return;
+
+            // Compter le nombre de sites dans le tableau (ignorer les lignes info et summary)
+            const rows = document.querySelectorAll('#prm_table_body tr');
+            let siteCount = 0;
+            rows.forEach((row) => {
+                if (!row.classList.contains('site-info-row') && row.id !== 'sites_summary_row') {
+                    siteCount++;
+                }
+            });
+
+            // Récupérer les champs de la section 3
+            const typeCalendrierField = document.getElementById('type_calendrier_site');
+            const dateDebutField = document.getElementById('date_debut');
+            const dureeMoisField = document.getElementById('duree_mois');
+
+            if (siteCount >= 1) {
+                // Si au moins 1 site existe : retirer required (ces champs servent juste à configurer le site suivant)
+                if (typeCalendrierField) typeCalendrierField.removeAttribute('required');
+                if (dateDebutField) dateDebutField.removeAttribute('required');
+                if (dureeMoisField) dureeMoisField.removeAttribute('required');
+
+                // Afficher un message de succès sous le tableau
+                displayC5SuccessMessage(siteCount);
+            } else {
+                // Si 0 site : remettre required pour forcer l'ajout d'au moins un site
+                if (typeCalendrierField) typeCalendrierField.setAttribute('required', 'required');
+                if (dateDebutField) dateDebutField.setAttribute('required', 'required');
+                if (dureeMoisField) dureeMoisField.setAttribute('required', 'required');
+
+                // Retirer le message de succès
+                const successMsg = document.getElementById('c5_success_message');
+                if (successMsg) successMsg.remove();
+            }
+        }
+
+        function displayC5SuccessMessage(siteCount) {
+            // Vérifier si le message existe déjà
+            let successMsg = document.getElementById('c5_success_message');
+
+            if (!successMsg) {
+                // Créer le message après le tableau
+                const tableContainer = document.getElementById('prm_table').parentElement;
+                successMsg = document.createElement('div');
+                successMsg.id = 'c5_success_message';
+                successMsg.style.cssText = `
+                    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+                    color: #065f46;
+                    padding: 15px 20px;
+                    margin-top: 15px;
+                    border-radius: 8px;
+                    border-left: 5px solid #10b981;
+                    font-weight: 600;
+                    font-size: 1em;
+                    text-align: center;
+                `;
+                tableContainer.appendChild(successMsg);
+            }
+
+            // Mettre à jour le texte
+            const pluriel = siteCount > 1 ? 's' : '';
+            successMsg.innerHTML = `✅ ${siteCount} site${pluriel} ajouté${pluriel}. Vous pouvez ajouter un autre site ou <strong>générer la CPV</strong>.`;
+        }
+
+        // ============================================================
+        // CALCUL VOLUMES PAR SITE C5
+        // ============================================================
+        function calculateSiteVolumes() {
+            // Fonctionner pour tous les segments maintenant (pas juste C5)
+            let carTotale = 0;
+            let volumeContractuel = 0;
+            let commissionTotale = 0;
+            const marge = parseFloat(document.getElementById('marge_courtier')?.value) || 0;
+
+            const rows = document.querySelectorAll('#prm_table_body tr');
+            console.log(`🔍 calculateSiteVolumes: ${rows.length} ligne(s) <tr> trouvée(s) dans #prm_table_body`);
+
+            rows.forEach((row, index) => {
+                console.log(`\n📋 Analyse ligne ${index + 1}:`, {
+                    id: row.id || '(pas d\'id)',
+                    classes: row.className || '(pas de classe)',
+                    innerHTML_preview: row.innerHTML.substring(0, 100) + '...'
+                });
+                // Ignorer les lignes d'info et de résumé
+                if (row.classList.contains('site-info-row') || row.id === 'sites_summary_row') {
+                    return;
+                }
+
+                // Vérifier si la ligne a un input CAR (= vraie ligne de site)
+                // Exclure car_detail_site_X qui contient du JSON, ne chercher que car_X
+                const carInput = row.querySelector(`input[name^="car_"]:not([name*="detail"])`);
+                const carHidden = row.querySelector(`input[type="hidden"][name^="car_"]`);
+                const allInputs = row.querySelectorAll('input');
+                const inputsList = Array.from(allInputs).map(i => `${i.name}=${i.value}`).slice(0, 10);
+
+                console.log(`🔬 DEBUG ROW ${index + 1}: ${JSON.stringify({
+                    carInput_found: !!carInput,
+                    carInput_name: carInput?.name || 'null',
+                    carInput_value: carInput?.value || 'null',
+                    carInput_getAttribute: carInput?.getAttribute('value') || 'null',
+                    carHidden_found: !!carHidden,
+                    totalInputs: allInputs.length,
+                    firstInputs: inputsList
+                })}`);
+
+                if (!carInput) {
+                    console.log(`⏭️  Ligne ${index + 1} ignorée: pas d'input CAR (ligne de titre ou résumé)`);
+                    return;
+                }
+
+                const dateDebut = row.querySelector(`input[name^="date_debut_site_"]`)?.value;
+                const dateFin = row.querySelector(`input[name^="date_fin_site_"]`)?.value;
+                const car = parseFloat(carInput.value) || 0;
+
+                // Calculer durée en mois
+                let dureeMois = 0;
+                let volumeSite = 0;
+                let commissionSite = 0;
+
+                if (dateDebut && dateFin) {
+                    const debut = new Date(dateDebut);
+                    const fin = new Date(dateFin);
+                    const diffMs = fin - debut;
+                    dureeMois = Math.max(0, Math.round(diffMs / (1000 * 60 * 60 * 24 * 30.44)));
+
+                    console.log(`🔍 calculateSiteVolumes - Site ${index + 1}:`, {
+                        dateDebut,
+                        dateFin,
+                        debut: debut.toString(),
+                        fin: fin.toString(),
+                        diffMs,
+                        dureeMois,
+                        car,
+                        marge
+                    });
+                } else {
+                    console.warn(`⚠️ Site ${index + 1}: dates manquantes`, {dateDebut, dateFin, car});
+                }
+
+                if (car > 0 && dureeMois > 0) {
+                    volumeSite = car * (dureeMois / 12);
+                    commissionSite = (marge / 2) * volumeSite;
+                    console.log(`   ✅ Volume = ${volumeSite.toFixed(2)} MWh, Commission = ${commissionSite.toFixed(2)} €`);
+                } else {
+                    console.warn(`   ❌ Calcul impossible: car=${car}, dureeMois=${dureeMois}`);
+                }
+
+                carTotale += car;
+                volumeContractuel += volumeSite;
+                commissionTotale += commissionSite;
+
+                // Mettre à jour la colonne Commission du site
+                const commissionCell = row.querySelector('.commission-display');
+                if (commissionCell) {
+                    commissionCell.textContent = Math.round(commissionSite).toLocaleString('fr-FR') + ' €';
+                }
+
+                // Afficher info sous le site
+                displaySiteInfo(row, dureeMois, volumeSite, commissionSite);
+            });
+
+            // Afficher le récapitulatif
+            displaySitesTotalsSummary(carTotale, volumeContractuel, commissionTotale);
+
+            // Mettre à jour CAR Total dans la section 4
+            document.getElementById('currentTotal').textContent = carTotale.toFixed(2);
+
+            // Mettre à jour la commission globale (dans la section 3)
+            updateCommissionFromVolume(volumeContractuel);
+
+            // Mettre à jour les champs required de la section 3 en fonction du nombre de sites
+            updateC5RequiredFields();
+        }
+
+        function displaySiteInfo(row, dureeMois, volumeSite, commissionSite) {
+            // Supprimer l'info existante si elle existe
+            let infoRow = row.nextElementSibling;
+            if (infoRow && infoRow.classList.contains('site-info-row')) {
+                infoRow.remove();
+            }
+
+            // Créer la nouvelle ligne d'info
+            const newInfoRow = row.parentElement.insertRow(row.rowIndex);
+            newInfoRow.classList.add('site-info-row');
+            const cell = newInfoRow.insertCell(0);
+            cell.colSpan = 13; // Toutes les colonnes du tableau (avec la nouvelle colonne Commission)
+            cell.style.background = '#f0f9ff';
+            cell.style.padding = '5px 10px';
+            cell.style.fontSize = '0.85em';
+            cell.style.color = '#0369a1';
+            cell.style.borderBottom = '2px solid #e0f2fe';
+            cell.innerHTML = `<strong>📊 Durée : ${dureeMois} mois</strong> → <strong>Volume : ${volumeSite.toFixed(2)} MWh</strong> → <strong>💰 Commission : ${Math.round(commissionSite).toLocaleString('fr-FR')} €</strong>`;
+        }
+
+        function displaySitesTotalsSummary(carTotale, volumeContractuel, commissionTotale) {
+            // Créer ou mettre à jour la ligne de récapitulatif
+            let summaryRow = document.getElementById('sites_summary_row');
+
+            if (!summaryRow) {
+                const tbody = document.getElementById('prm_table_body');
+                summaryRow = tbody.insertRow();
+                summaryRow.id = 'sites_summary_row';
+            }
+
+            summaryRow.innerHTML = `
+                <td colspan="13" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+                                        padding: 15px;
+                                        font-weight: 700;
+                                        font-size: 1.1em;
+                                        color: #0369a1;
+                                        border-top: 3px solid #0ea5e9;
+                                        text-align: center;">
+                    <span style="margin-right: 25px;">📊 CAR Totale : <span style="color: #0c4a6e;">${carTotale.toFixed(2)} MWh/an</span></span>
+                    <span style="margin-right: 25px;">📦 Volume contractuel : <span style="color: #0c4a6e;">${volumeContractuel.toFixed(2)} MWh</span></span>
+                    <span>💰 Commission totale : <span style="color: #4CAF50; font-size: 1.2em;">${Math.round(commissionTotale).toLocaleString('fr-FR')} €</span></span>
+                </td>
+            `;
+        }
+
+        function updateCommissionFromVolume(volumeContractuel) {
+            const marge = parseFloat(document.getElementById('marge_courtier')?.value) || 0;
+            const commission = (marge / 2) * volumeContractuel;
+
+            const commissionElement = document.getElementById('commission_totale');
+            if (commissionElement) {
+                commissionElement.textContent = Math.round(commission).toLocaleString('fr-FR');
+            }
+
+            const formulaElement = document.getElementById('commission_formula');
+            if (formulaElement) {
+                formulaElement.textContent = `(${marge.toFixed(2)} / 2) €/MWh × ${volumeContractuel.toFixed(2)} MWh`;
+            }
+        }
+
+        function validatePRM(input) {
+            const value = input.value;
+            if (value.length === 14 && /^\d{14}$/.test(value)) {
+                input.classList.add('success');
+                input.classList.remove('error');
+            } else if (value.length > 0) {
+                input.classList.add('error');
+                input.classList.remove('success');
+            } else {
+                input.classList.remove('success', 'error');
+            }
+        }
+
+        function removeSite(siteId) {
+            const row = document.getElementById(`site_row_${siteId}`);
+            if (row) {
+                // Supprimer aussi la ligne d'info si elle existe
+                const nextRow = row.nextElementSibling;
+                if (nextRow && nextRow.classList.contains('site-info-row')) {
+                    nextRow.remove();
+                }
+                row.remove();
+                // Recalculer les volumes après suppression
+                if (segment === 'C5') {
+                    calculateSiteVolumes();
+                }
+            }
+        }
+
+        document.getElementById('btnAddSite').addEventListener('click', function() {
+            addSiteRow();
+        });
+
+        // Adapter l'interface selon le segment
+        function updateUIForSegment() {
+            const btnAddSite = document.getElementById('btnAddSite');
+
+            if (segment === 'C5') {
+                // Pour C5, masquer le bouton "Ajouter un Site" (on utilise le formulaire de la section 4)
+                btnAddSite.style.display = 'none';
+            } else {
+                // Pour C2/C4, afficher le bouton
+                btnAddSite.style.display = 'block';
+            }
+        }
+
+        // ============================================================
+        // 10. VÉRIFICATION VALIDITÉ FORMULAIRE
+        // ============================================================
+        function checkFormValidity() {
+            const score = parseFloat(scoreInput.value);
+            const currentSegment = segment || document.getElementById('segment')?.value || document.getElementById('segment_display')?.value || '';
+
+            // Pour C2 et C4 : le score < 5 n'est pas bloquant (juste un warning)
+            // Pour C5 : le score < 5 est bloquant
+            let isScoreValid = !isNaN(score) && score >= 5;
+            if (!isNaN(score) && score < 5 && (currentSegment === 'C2' || currentSegment === 'C4')) {
+                isScoreValid = true; // Autoriser la génération pour C2/C4 avec score < 5
+            }
+
+            // On pourrait ajouter d'autres validations ici
+            btnGenerate.disabled = !isScoreValid;
+        }
+
+        // ============================================================
+        // 11. SOUMISSION FORMULAIRE
+        // ============================================================
+        document.getElementById('cpvForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Validation finale score
+            const score = parseFloat(scoreInput.value);
+            const currentSegment = segment || document.getElementById('segment')?.value || document.getElementById('segment_display')?.value || '';
+
+            // Pour C5 uniquement : bloquer si score < 5
+            // Pour C2/C4 : autoriser même si score < 5 (avec warning)
+            if (isNaN(score) || (score < 5 && currentSegment !== 'C2' && currentSegment !== 'C4')) {
+                showNotification('Impossible de générer le CPV\n\n📊 Score client insuffisant (minimum 5/10).\n\nVeuillez améliorer le score client avant de générer le CPV.', 'error');
+                return;
+            }
+
+            // Validation : vérifier qu'il y a au moins 1 site dans le tableau (tous segments)
+            if (siteCount === 0) {
+                showNotification('Veuillez ajouter au moins un site au tableau avant de générer le CPV.\n\n🏢 Utilisez la Section 3-5 pour ajouter vos sites.', 'error');
+                return;
+            }
+
+            // Pour C2/C4 : vérifier aussi que les prix P0 ont été calculés (optionnel si les dates/CAR sont dans le tableau)
+            if (segment !== 'C5') {
+                if (!prixP0Data || !prixP0Data.prix_p0 || !prixP0Data.prix_finaux) {
+                    console.warn('⚠️ prixP0Data non disponible, vérification des données dans le tableau...');
+                    // Vérifier que chaque site du tableau a Date Début, Date Fin, CAR
+                    const rows = document.querySelectorAll('#prm_table_body tr:not(.site-info-row):not(#sites_summary_row)');
+                    let missingData = false;
+                    rows.forEach((row, index) => {
+                        const dateDebut = row.querySelector(`input[name^="date_debut_site_"]`)?.value;
+                        const dateFin = row.querySelector(`input[name^="date_fin_site_"]`)?.value;
+                        const car = row.querySelector(`input[name^="car_"]`)?.value;
+                        if (!dateDebut || !dateFin || !car || parseFloat(car) === 0) {
+                            missingData = true;
+                        }
+                    });
+                    if (missingData) {
+                        showNotification('Certains sites du tableau manquent de données.\n\n📅 Date Début, Date Fin ou CAR manquants.\n\nVeuillez compléter les informations avant de générer le CPV.', 'warning');
+                        return;
+                    }
+                } else {
+                    console.log('✅ Validation OK - prixP0Data contient les prix:', prixP0Data);
+                }
+            }
+
+            try {
+                btnGenerate.disabled = true;
+                btnGenerate.innerHTML = '<div class="spinner"></div> Génération en cours...';
+
+                const formData = new FormData(this);
+
+                // Forcer l'ajout des champs manquants du bandeau (hors form)
+                formData.set('raison_sociale', document.getElementById('raison_sociale_display')?.value || '');
+                formData.set('siren', document.getElementById('siren_display')?.value || '');
+                // FIX BUG C5: Utiliser la variable JavaScript 'segment' au lieu de lire le DOM
+                formData.set('segment', segment);
+
+                // Forcer la marge à jour dans prix_p0_data AVANT stringify
+                if (prixP0Data && prixP0Data.prix_p0) {
+                    prixP0Data.marge_courtier = parseFloat(document.getElementById('marge_courtier').value);
+                }
+
+                // Pour C5 : créer un objet minimal si prixP0Data n'existe pas
+                // (car les prix sont intégrés dans chaque site, pas dans un objet global)
+                const prixDataToSend = prixP0Data || {
+                    marge_courtier: parseFloat(document.getElementById('marge_courtier').value)
+                };
+
+                // Ajouter les données de prix (avec marge mise à jour)
+                formData.append('prix_p0_data', JSON.stringify(prixDataToSend));
+                formData.append('site_count', siteCount);
+
+                // DEBUG: Tests spécifiques demandés
+                console.log("🔍 DEBUG CHAMPS CRITIQUES:");
+                console.log("raison_sociale:", formData.get('raison_sociale'));
+                console.log("siren:", formData.get('siren'));
+                console.log("segment:", formData.get('segment'));
+                console.log("prix_p0_data FULL:", formData.get('prix_p0_data'));
+
+                // DEBUG: Log des données envoyées
+                console.log('\n📤 Envoi de la requête de génération CPV:');
+                console.log('   Session ID:', sessionId);
+                console.log('   Nombre de sites:', siteCount);
+                console.log('   FormData contents:');
+                for (let [key, value] of formData.entries()) {
+                    if (typeof value === 'string' && value.length > 100) {
+                        console.log(`   - ${key}: ${value.substring(0, 100)}... (${value.length} chars)`);
+                    } else {
+                        console.log(`   - ${key}:`, value);
+                    }
+                }
+
+                const response = await fetch(`/generate/${sessionId}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Afficher le modal de choix de format
+                    const filename = result.filename;
+                    document.getElementById('modalFilename').textContent = filename;
+                    document.getElementById('btnDownloadDocx').href = result.download_url;
+                    document.getElementById('btnDownloadPdf').href = `/download_pdf/${filename}`;
+                    document.getElementById('downloadModal').style.display = 'flex';
+                } else {
+                    throw new Error(result.error || 'Erreur inconnue');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('alerts').innerHTML = `
+                    <div class="alert alert-error">❌ Erreur : ${error.message}</div>
+                `;
+                window.scrollTo(0, 0);
+            } finally {
+                btnGenerate.disabled = false;
+                btnGenerate.innerHTML = '🚀 Générer le CPV 2026';
+            }
+        });
+
+        // ============================================================
+        // 12. GESTION DES RADIO BUTTONS CEE ET GO
+        // ============================================================
+        // CEE - Déclencher la validation du formulaire quand changé
+        const ceeRadios = document.querySelectorAll('input[name="cee_status"]');
+        ceeRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                checkFormValidity();
+            });
+        });
+
+        // GO - Afficher/masquer la section pourcentage selon le choix
+        const goChoixRadios = document.querySelectorAll('input[name="go_choix"]');
+        const goPercentageSection = document.getElementById('go_percentage_section');
+        const goSouhaiteHidden = document.getElementById('go_souhaite_hidden');
+
+        goChoixRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'souhaite') {
+                    goPercentageSection.style.display = 'block';
+                    // Récupérer le pourcentage sélectionné
+                    const percentageRadios = document.querySelectorAll('input[name="go_percentage"]');
+                    let selectedPercentage = '25'; // Défaut
+                    for (const pctRadio of percentageRadios) {
+                        if (pctRadio.checked) {
+                            selectedPercentage = pctRadio.value;
+                            break;
+                        }
+                    }
+                    goSouhaiteHidden.value = selectedPercentage;
+                } else {
+                    goPercentageSection.style.display = 'none';
+                    goSouhaiteHidden.value = '0';
+                }
+                // Déclencher la validation du formulaire
+                checkFormValidity();
+            });
+        });
+
+        // GO - Mettre à jour la valeur hidden quand le pourcentage change
+        const goPercentageRadios = document.querySelectorAll('input[name="go_percentage"]');
+        goPercentageRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                goSouhaiteHidden.value = this.value;
+            });
+        });
+
+        // ============================================================
+        // 13. INITIALISATION AU CHARGEMENT
+        // ============================================================
+        window.addEventListener('DOMContentLoaded', function() {
+            // Initialiser les durées disponibles (12-47 mois)
+            initDurees();
+
+            // Mettre à jour l'en-tête du tableau en fonction du segment
+            updateTableHeader();
+
+            // Adapter l'interface selon le segment (masquer bouton pour C5, etc.)
+            updateUIForSegment();
+
+            // Afficher/masquer le dropdown "Type de calendrier" et le formulaire d'infos du site pour C5
+            updateTypeCalendrierVisibility();
+
+            // Ajouter event listener au dropdown "Type de calendrier"
+            document.getElementById('type_calendrier_site')?.addEventListener('change', onTypeCalendrierChange);
+
+            // Ajouter event listener au bouton "Ajouter ce Site au Tableau" (C5)
+            document.getElementById('btnAddSiteFromForm')?.addEventListener('click', addC5SiteFromForm);
+
+            // Générer les champs de consommation (ou le formulaire C5)
+            generateConsoFields();
+
+            // EVENT DELEGATION: Écouter tous les événements 'input' sur les champs .conso-input
+            // Cela fonctionne même pour les champs créés dynamiquement
+            const consoFieldsContainer = document.getElementById('consoFields');
+            if (consoFieldsContainer) {
+                consoFieldsContainer.addEventListener('input', function(e) {
+                    if (e.target && e.target.classList.contains('conso-input')) {
+                        console.log(`🎯 Input détecté sur ${e.target.id || e.target.name}: ${e.target.value}`);
+                        updateConsoTotal();
+                    }
+                });
+                console.log('✅ Event delegation configuré sur #consoFields');
+            }
+
+            // Fonction helper pour nettoyer les valeurs de puissance
+            function cleanPuissanceValue(puissance) {
+                if (!puissance) return '';
+                // Extraire uniquement la valeur numérique de strings comme "96 kVA", "100 kW", "250"
+                const match = puissance.toString().match(/[\d.]+/);
+                return match ? match[0] : '';
+            }
+
+            // ============================================================
+            // C5 WORKFLOW FIX: Ne PAS ajouter les sites automatiquement au tableau
+            // Stocker les sites parsés et pré-remplir le formulaire avec le premier site
+            // ============================================================
+            const prmList = '{{ data.prm_list|tojson if data.prm_list else "[]" }}'.replace(/'/g, '"');
+            const prmArray = JSON.parse(prmList);
+            const typeCalendrier = '{{ data.type_calendrier or "" }}';
+            const siretComplet = '{{ data.siret_complet or "" }}';
+            const codeNaf = '{{ data.code_naf or "" }}';
+            const adresseConsommation = '{{ data.adresse_consommation or data.adresse_site or data.adresse_siege or "" }}';
+            const puissanceValue = cleanPuissanceValue('{{ data.puissance or "" }}');
+
+            // DEBUG: Afficher les valeurs reçues du serveur
+            console.log('🔍 DEBUG - Données reçues du serveur:', {
+                siretComplet: siretComplet,
+                codeNaf: codeNaf,
+                adresseConsommation: adresseConsommation,
+                puissanceValue: puissanceValue,
+                typeCalendrier: typeCalendrier,
+                prmArray: prmArray
+            });
+
+            // Pour C5 : stocker les sites parsés dans l'array global et pré-remplir le formulaire avec le 1er site
+            if (segment === 'C5') {
+                if (prmArray && prmArray.length > 0) {
+                    // Multi-sites C5
+                    console.log(`📋 C5 WORKFLOW: ${prmArray.length} site(s) détecté(s) dans le RGPD`);
+
+                    // Créer un objet pour chaque site et le stocker dans sitesFromRGPD
+                    sitesFromRGPD = prmArray.map(prm => {
+                        // Auto-déduction du FTA basée sur la puissance
+                        let ftaValue = 'BT ≤ 36 kVA';  // Valeur par défaut
+                        if (puissanceValue) {
+                            const puissanceNum = parseFloat(puissanceValue);
+                            if (!isNaN(puissanceNum)) {
+                                if (puissanceNum > 36) {
+                                    ftaValue = 'BT > 36 kVA';
+                                }
+                            }
+                        }
+
+                        return {
+                            prm: prm,
+                            siret: siretComplet || '',
+                            naf: codeNaf || '',
+                            adresse: adresseConsommation || '',
+                            type_calendrier: typeCalendrier,
+                            fta: ftaValue,
+                            puissance: puissanceValue || ''
+                        };
+                    });
+
+                    // Stocker les PRMs restants pour référence
+                    window.remainingPRMs = prmArray.slice(1);
+
+                    currentSiteIndex = 0;
+
+                    // DEBUG: Vérifier les données du premier site qui va être utilisé pour le pré-remplissage
+                    console.log('🔍 DEBUG - Premier site à pré-remplir:', sitesFromRGPD[0]);
+                    console.log('🔍 DEBUG - Tous les sites créés:', sitesFromRGPD);
+
+                    // Pré-remplir le formulaire avec le premier site (NE PAS l'ajouter au tableau)
+                    console.log(`✅ Pré-remplissage du formulaire avec le site 1/${sitesFromRGPD.length}`);
+                    prefillSiteForm(sitesFromRGPD[0]);
+
+                    // Afficher un message informatif à l'utilisateur
+                    const alertDiv = document.getElementById('alerts');
+                    if (alertDiv) {
+                        alertDiv.innerHTML = `
+                            <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+                                        border-left: 5px solid #2196F3;
+                                        padding: 20px;
+                                        border-radius: 12px;
+                                        margin: 20px 0;
+                                        box-shadow: 0 4px 15px rgba(33, 150, 243, 0.2);">
+                                <h3 style="color: #0d47a1; margin-bottom: 10px; font-size: 1.2em;">
+                                    📋 ${sitesFromRGPD.length} site(s) détecté(s) dans le RGPD
+                                </h3>
+                                <p style="color: #1565c0; margin: 0;">
+                                    Le formulaire a été pré-rempli avec le <strong>site 1/${sitesFromRGPD.length}</strong>.
+                                    Complétez les <strong>dates</strong> (Section 3), les <strong>volumes CAR</strong> (Section 4) et la <strong>marge courtier</strong> (Section 2),
+                                    puis cliquez sur <strong>"Calculer les Prix"</strong> puis <strong>"Ajouter ce Site au Tableau"</strong>.
+                                </p>
+                            </div>
+                        `;
+                    }
+                } else if ('{{ data.pdl or "" }}' !== '') {
+                    // Mono-site C5
+                    console.log('📋 C5 WORKFLOW: 1 site détecté dans le RGPD');
+
+                    sitesFromRGPD = [{
+                        prm: '{{ data.pdl or "" }}',
+                        siret: siretComplet,
+                        naf: codeNaf,
+                        adresse: adresseConsommation,
+                        type_calendrier: typeCalendrier,
+                        fta: 'BT ≤ 36 kVA',
+                        puissance: puissanceValue
+                    }];
+
+                    currentSiteIndex = 0;
+
+                    // Pré-remplir le formulaire avec le site unique
+                    console.log(`✅ Pré-remplissage du formulaire avec le site unique`);
+                    prefillSiteForm(sitesFromRGPD[0]);
+
+                    const alertDiv = document.getElementById('alerts');
+                    if (alertDiv) {
+                        alertDiv.innerHTML = `
+                            <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+                                        border-left: 5px solid #2196F3;
+                                        padding: 20px;
+                                        border-radius: 12px;
+                                        margin: 20px 0;
+                                        box-shadow: 0 4px 15px rgba(33, 150, 243, 0.2);">
+                                <h3 style="color: #0d47a1; margin-bottom: 10px; font-size: 1.2em;">
+                                    📋 1 site détecté dans le RGPD
+                                </h3>
+                                <p style="color: #1565c0; margin: 0;">
+                                    Le formulaire a été pré-rempli. Complétez les <strong>dates</strong>, les <strong>volumes CAR</strong> et la <strong>marge</strong>,
+                                    puis cliquez sur <strong>"Calculer les Prix"</strong> puis <strong>"Ajouter ce Site au Tableau"</strong>.
+                                </p>
+                            </div>
+                        `;
+                    }
+                } else {
+                    console.log('⚠️ Aucune donnée PRM extraite pour ce C5');
+                }
+            } else {
+                // Pour C2/C4 : comportement original (ajout automatique au tableau)
+                if (prmArray && prmArray.length > 0) {
+                    // Multi-sites C2/C4
+                    console.log(`✅ Pré-remplissage de ${prmArray.length} site(s) depuis RGPD (C2/C4)`);
+                    prmArray.forEach((prm, index) => {
+                        addSiteRow(
+                            prm,
+                            siretComplet,
+                            codeNaf,
+                            adresseConsommation,
+                            typeCalendrier,
+                            '',                                                                  // FTA (vide par défaut)
+                            puissanceValue,
+                            '',                                                                  // date_debut_site (vide)
+                            '',                                                                  // date_fin_site (vide)
+                            '',                                                                  // CAR (vide)
+                            {}                                                                   // carDetails (vide)
+                        );
+                    });
+                } else if ('{{ data.pdl or "" }}' !== '') {
+                    // Mono-site C2/C4
+                    console.log('✅ Pré-remplissage d\'un site unique depuis RGPD (C2/C4)');
+                    addSiteRow(
+                        '{{ data.pdl or "" }}',
+                        siretComplet,
+                        codeNaf,
+                        adresseConsommation,
+                        typeCalendrier,
+                        '',                                                                  // FTA (vide par défaut)
+                        puissanceValue,
+                        '',                                                                  // date_debut_site (vide)
+                        '',                                                                  // date_fin_site (vide)
+                        '',                                                                  // CAR (vide)
+                        {}                                                                   // carDetails (vide)
+                    );
+                } else {
+                    console.log('⚠️ Aucune donnée PRM extraite, tableau de sites vide');
+                }
+            }
+
+            // ✅ FIX: Vérifier la validité du formulaire au chargement
+            // (active le bouton si le score est déjà pré-rempli et >= 5)
+            checkFormValidity();
+
+            // ============================================================
+            // GESTION ENTREPRENEUR INDIVIDUEL (capital = 0)
+            // ============================================================
+            const formeJuridiqueSelect = document.getElementById('forme-juridique-select');
+            const capitalSocialInput = document.getElementById('capital-social-input');
+
+            function updateCapitalSocialForEI() {
+                if (formeJuridiqueSelect.value === 'Entrepreneur individuel') {
+                    capitalSocialInput.value = '0';
+                    capitalSocialInput.readOnly = true;
+                    capitalSocialInput.style.backgroundColor = '#f0f0f0';
+                    capitalSocialInput.style.cursor = 'not-allowed';
+                } else {
+                    capitalSocialInput.readOnly = false;
+                    capitalSocialInput.style.backgroundColor = '';
+                    capitalSocialInput.style.cursor = '';
+                }
+            }
+
+            // Initialiser au chargement
+            updateCapitalSocialForEI();
+
+            // Mettre à jour quand la forme juridique change
+            formeJuridiqueSelect.addEventListener('change', updateCapitalSocialForEI);
+        });
+    </script>
+
+    <!-- Modal Choix de Format -->
+    <div id="downloadModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
+        <div style="background:white; border-radius:16px; padding:40px; max-width:500px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+            <h2 style="margin-bottom:8px; color:#1a1a2e; font-size:24px;">✅ CPV généré avec succès !</h2>
+            <p style="color:#666; margin-bottom:30px; font-size:14px;" id="modalFilename">Choisissez le format de téléchargement</p>
+            <div style="display:flex; gap:16px; justify-content:center;">
+                <a id="btnDownloadDocx" href="#" style="flex:1; padding:16px 24px; background:linear-gradient(135deg,#2b5797,#3a7bd5); color:white; border-radius:12px; text-decoration:none; font-weight:bold; font-size:16px; display:flex; align-items:center; justify-content:center; gap:8px; transition:transform 0.2s;">
+                    📄 Word (.docx)
+                </a>
+                <a id="btnDownloadPdf" href="#" style="flex:1; padding:16px 24px; background:linear-gradient(135deg,#c0392b,#e74c3c); color:white; border-radius:12px; text-decoration:none; font-weight:bold; font-size:16px; display:flex; align-items:center; justify-content:center; gap:8px; transition:transform 0.2s;">
+                    📕 PDF
+                </a>
+            </div>
+            <button onclick="document.getElementById('downloadModal').style.display='none'" style="margin-top:20px; background:none; border:none; color:#999; cursor:pointer; font-size:14px; text-decoration:underline;">✕ Fermer</button>
+        </div>
+    </div>
+
+    <style>
+        #downloadModal a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+    </style>
+</body>
+</html>

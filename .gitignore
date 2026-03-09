@@ -1,0 +1,43 @@
+# Environment variables
+.env
+.env.local
+
+# Database
+instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Flask
+instance/
+.webassets-cache
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads et output (générés dynamiquement)
+uploads/*
+!uploads/.gitkeep
+output/*
+!output/.gitkeep
+
+# Logs
+*.log

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration du Contrat - CPV MINT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2D1B69 0%, #4CAF50 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #2D1B69;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .metadata {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .metadata-item strong {
+            color: #2D1B69;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .form-section h2 {
+            color: #2D1B69;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .segment-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .segment-btn {
+            padding: 20px;
+            background: white;
+            border: 3px solid #ddd;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .segment-btn:hover {
+            border-color: #4CAF50;
+            transform: translateY(-3px);
+        }
+
+        .segment-btn.active {
+            border-color: #4CAF50;
+            background: #e8f5e9;
+        }
+
+        .segment-btn input[type="radio"] {
+            display: none;
+        }
+
+        .segment-btn .segment-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2D1B69;
+            margin-bottom: 5px;
+        }
+
+        .segment-btn .segment-desc {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .slider-container {
+            margin-top: 10px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            text-align: center;
+            font-size: 1.5em;
+            color: #4CAF50;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .prix-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .prix-preview.show {
+            display: block;
+        }
+
+        .prix-preview table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .prix-preview th,
+        .prix-preview td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .prix-preview th {
+            background: #2D1B69;
+            color: white;
+        }
+
+        .prix-p0 {
+            color: #666;
+        }
+
+        .prix-final {
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .btn-continue {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 30px;
+        }
+
+        .btn-continue:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-continue:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            color: #1976D2;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4CAF50;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚙️ Configuration du Contrat</h1>
+
+        <div class="alert alert-info">
+            📊 Grille Excel MINT chargée avec succès ! Configurez maintenant les paramètres du contrat.
+        </div>
+
+        <div class="metadata">
+            {% for segment, meta in metadata.items() %}
+            <div class="metadata-item">
+                <strong>{{ segment }}</strong>
+                <span>Date grille : {{ meta.date_grille or 'N/A' }}</span>
+                <span>Seuil : {{ meta.seuil or 'N/A' }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <form id="config-form">
+            <!-- Sélection du segment -->
+            <div class="form-section">
+                <h2>1️⃣ Sélection du segment</h2>
+                <div class="segment-selector">
+                    <label class="segment-btn" onclick="selectSegment('C2')">
+                        <input type="radio" name="segment" value="C2">
+                        <div class="segment-name">C2</div>
+                        <div class="segment-desc">Grande industrie HTA<br>5 postes</div>
+                    </label>
+                    <label class="segment-btn active" onclick="selectSegment('C4')">
+                        <input type="radio" name="segment" value="C4" checked>
+                        <div class="segment-name">C4</div>
+                        <div class="segment-desc">PME BT > 36 kVA<br>4 postes</div>
+                    </label>
+                    <label class="segment-btn" onclick="selectSegment('C5')">
+                        <input type="radio" name="segment" value="C5">
+                        <div class="segment-name">C5</div>
+                        <div class="segment-desc">TPE ≤ 36 kVA<br>Multi-sites</div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Date de début -->
+            <div class="form-section">
+                <h2>2️⃣ Date de début de fourniture</h2>
+                <div class="form-group">
+                    <label for="date_debut">Choisissez la date de début :</label>
+                    <select id="date_debut" name="date_debut" required>
+                        <option value="">-- Sélectionnez une date --</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Durée -->
+            <div class="form-section">
+                <h2>3️⃣ Durée du contrat</h2>
+                <div class="form-group">
+                    <label for="duree_mois">Choisissez la durée (mois) :</label>
+                    <select id="duree_mois" name="duree_mois" required disabled>
+                        <option value="">-- Sélectionnez d'abord une date --</option>
+                    </select>
+                </div>
+                <div id="date_fin_display" style="margin-top: 15px; display: none;">
+                    <strong>Date de fin :</strong> <span id="date_fin_value"></span>
+                </div>
+            </div>
+
+            <!-- Marge courtier -->
+            <div class="form-section">
+                <h2>4️⃣ Marge courtier</h2>
+                <div class="form-group">
+                    <label for="marge_courtier">Marge courtier (€/MWh) : min 6, max 25</label>
+                    <input type="range" id="marge_courtier" name="marge_courtier" min="6" max="25" value="10" step="0.5" class="slider">
+                    <div class="slider-value"><span id="marge_value">10.00</span> €/MWh</div>
+                </div>
+
+                <div class="loading" id="loading-prix">
+                    <div class="spinner"></div>
+                    <div>Chargement des prix...</div>
+                </div>
+
+                <div class="prix-preview" id="prix-preview">
+                    <h3 style="color: #2D1B69; margin-bottom: 15px;">💰 Aperçu des prix</h3>
+                    <table id="prix-table">
+                        <thead>
+                            <tr>
+                                <th>Poste</th>
+                                <th>Prix P0 (€/MWh)</th>
+                                <th>Prix Client (€/MWh)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="prix-tbody">
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                        <strong>Coefficient de capacité α :</strong> <span id="coeff-alpha">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-continue" id="btn-continue" disabled>
+                Continuer vers la saisie client →
+            </button>
+        </form>
+    </div>
+
+    <script>
+        const sessionId = '{{ session_id }}';
+        const datesData = {
+            'C2': {{ dates_c2 | tojson }},
+            'C4': {{ dates_c4 | tojson }},
+            'C5': {{ dates_c5 | tojson }}
+        };
+
+        let currentSegment = 'C4';
+        let currentPrixP0 = null;
+
+        // Initialiser
+        loadDates('C4');
+
+        function selectSegment(segment) {
+            currentSegment = segment;
+            document.querySelectorAll('.segment-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            document.querySelector(`input[value="${segment}"]`).checked = true;
+
+            loadDates(segment);
+            document.getElementById('prix-preview').classList.remove('show');
+            document.getElementById('btn-continue').disabled = true;
+        }
+
+        function loadDates(segment) {
+            const dateSelect = document.getElementById('date_debut');
+            dateSelect.innerHTML = '<option value="">-- Sélectionnez une date --</option>';
+
+            const dates = datesData[segment] || [];
+            dates.forEach(date => {
+                const option = document.createElement('option');
+                option.value = date;
+                option.textContent = date;
+                dateSelect.appendChild(option);
+            });
+
+            // Reset durée
+            document.getElementById('duree_mois').disabled = true;
+            document.getElementById('duree_mois').innerHTML = '<option value="">-- Sélectionnez d\'abord une date --</option>';
+        }
+
+        document.getElementById('date_debut').addEventListener('change', async (e) => {
+            const dateDebut = e.target.value;
+            if (!dateDebut) return;
+
+            // Charger les durées disponibles
+            const response = await fetch(`/api/get_durees/${sessionId}`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    segment: currentSegment,
+                    date_debut: dateDebut
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                const dureeSelect = document.getElementById('duree_mois');
+                dureeSelect.innerHTML = '<option value="">-- Sélectionnez une durée --</option>';
+                dureeSelect.disabled = false;
+
+                result.durees.forEach(duree => {
+                    const option = document.createElement('option');
+                    option.value = duree;
+                    option.textContent = `${duree} mois`;
+                    dureeSelect.appendChild(option);
+                });
+            }
+        });
+
+        document.getElementById('duree_mois').addEventListener('change', (e) => {
+            if (e.target.value) {
+                calculDateFin();
+                loadPrix();
+            }
+        });
+
+        document.getElementById('marge_courtier').addEventListener('input', (e) => {
+            document.getElementById('marge_value').textContent = parseFloat(e.target.value).toFixed(2);
+            if (currentPrixP0) {
+                loadPrix();
+            }
+        });
+
+        function calculDateFin() {
+            const dateDebut = document.getElementById('date_debut').value;
+            const dureeMois = parseInt(document.getElementById('duree_mois').value);
+
+            if (!dateDebut || !dureeMois) return;
+
+            // Parser la date (format DD/MM/YYYY)
+            const [jour, mois, annee] = dateDebut.split('/').map(Number);
+            const date = new Date(annee, mois - 1, jour);
+
+            // Ajouter la durée
+            date.setMonth(date.getMonth() + dureeMois);
+            date.setDate(date.getDate() - 1); // Dernier jour du mois précédent
+
+            const dateFin = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+
+            document.getElementById('date_fin_value').textContent = dateFin;
+            document.getElementById('date_fin_display').style.display = 'block';
+        }
+
+        async function loadPrix() {
+            const dateDebut = document.getElementById('date_debut').value;
+            const dureeMois = parseInt(document.getElementById('duree_mois').value);
+            const margeCourtier = parseFloat(document.getElementById('marge_courtier').value);
+
+            if (!dateDebut || !dureeMois) return;
+
+            document.getElementById('loading-prix').classList.add('show');
+            document.getElementById('prix-preview').classList.remove('show');
+
+            try {
+                const response = await fetch(`/api/get_prix_p0/${sessionId}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        segment: currentSegment,
+                        date_debut: dateDebut,
+                        duree_mois: dureeMois,
+                        marge_courtier: margeCourtier
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    currentPrixP0 = result.prix_p0;
+                    displayPrix(result.prix_p0, result.prix_finaux, result.coefficient_alpha);
+                    document.getElementById('btn-continue').disabled = false;
+                } else {
+                    alert('Erreur : ' + result.error);
+                }
+            } catch (error) {
+                alert('Erreur de connexion : ' + error.message);
+            } finally {
+                document.getElementById('loading-prix').classList.remove('show');
+            }
+        }
+
+        function displayPrix(prixP0, prixFinaux, coeffAlpha) {
+            const tbody = document.getElementById('prix-tbody');
+            tbody.innerHTML = '';
+
+            // Mapping des noms de postes
+            const postes = {
+                'prix_pte': 'Pointe (PTE)',
+                'prix_hph': 'HPH',
+                'prix_hch': 'HCH',
+                'prix_hpe': 'HPE',
+                'prix_hce': 'HCE',
+                'prix_base': 'BASE',
+                'prix_hp': 'HP',
+                'prix_hc': 'HC',
+                'prix_hpsh': 'HPSH',
+                'prix_hcsh': 'HCSH',
+                'prix_hpsb': 'HPSB',
+                'prix_hcsb': 'HCSB'
+            };
+
+            for (const [key, nom] of Object.entries(postes)) {
+                if (prixP0[key] !== undefined && prixP0[key] > 0) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><strong>${nom}</strong></td>
+                        <td class="prix-p0">${parseFloat(prixP0[key]).toFixed(2)}</td>
+                        <td class="prix-final">${parseFloat(prixFinaux[key]).toFixed(2)}</td>
+                    `;
+                    tbody.appendChild(row);
+                }
+            }
+
+            document.getElementById('coeff-alpha').textContent = coeffAlpha || 'N/A';
+            document.getElementById('prix-preview').classList.add('show');
+        }
+
+        document.getElementById('config-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Sauvegarder la config en session et rediriger
+            const config = {
+                segment: currentSegment,
+                date_debut: document.getElementById('date_debut').value,
+                duree_mois: document.getElementById('duree_mois').value,
+                date_fin: document.getElementById('date_fin_value').textContent,
+                marge_courtier: document.getElementById('marge_courtier').value,
+                prix_p0: currentPrixP0
+            };
+
+            // Rediriger vers le formulaire de saisie client
+            window.location.href = `/form_manual/${sessionId}?config=${encodeURIComponent(JSON.stringify(config))}`;
+        });
+    </script>
+</body>
+</html>

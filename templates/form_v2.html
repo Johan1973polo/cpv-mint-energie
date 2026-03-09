@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire CPV - {{ data.raison_sociale }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .client-info {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .segment-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1.2em;
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #28a745;
+            padding: 12px 30px;
+            font-size: 1em;
+        }
+
+        .prix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .prix-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .prix-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .prix-table tr:hover {
+            background: #f8f9ff;
+        }
+
+        .prix-table input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .prix-table input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .gain-total {
+            background: #d4edda;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            border-left: 4px solid #28a745;
+        }
+
+        .gain-total-label {
+            font-size: 1.2em;
+            color: #155724;
+            margin-bottom: 10px;
+        }
+
+        .gain-total-value {
+            font-size: 3em;
+            font-weight: 700;
+            color: #28a745;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .alert-error {
+            background: #fee;
+            color: #c00;
+            border-left: 4px solid #c00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 Formulaire CPV - {{ data.raison_sociale }}</h1>
+        </div>
+
+        <div class="client-info">
+            <div class="info-item">
+                <span class="info-label">Raison Sociale</span>
+                <span class="info-value">{{ data.raison_sociale }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">SIREN</span>
+                <span class="info-value">{{ data.siren }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Segment</span>
+                <span class="segment-badge">{{ segment }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Volume Total</span>
+                <span class="info-value">{{ data.volume_total }} MWh</span>
+            </div>
+        </div>
+
+        <div id="alerts"></div>
+
+        <form id="cpvForm">
+            <input type="hidden" name="segment" value="{{ segment }}">
+
+            <!-- 1. INFORMATIONS JURIDIQUES -->
+            <div class="form-section">
+                <h2 class="section-title">🏢 1. Informations Juridiques</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Capital Social (€)</label>
+                        <input type="text" name="capital_social" class="form-input"
+                               value="{{ data.capital_social }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Fonction du Signataire</label>
+                        <input type="text" name="fonction_signataire" class="form-input"
+                               placeholder="Ex: Président, Gérant..." required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. INFORMATIONS RGPD -->
+            <div class="form-section" style="background: #f8f9fa; border-left: 4px solid #0d6efd;">
+                <h2 class="section-title">📋 2. Informations Extraites (RGPD)</h2>
+
+                <!-- INFORMATIONS SOCIÉTÉ -->
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: #0d6efd; font-size: 1.1em; margin-bottom: 10px; border-bottom: 2px solid #e9ecef; padding-bottom: 5px;">
+                        🏢 INFORMATIONS SOCIÉTÉ
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 0.95em;">
+                        <div><strong>Nom :</strong> {{ data.raison_sociale }}</div>
+                        <div><strong>SIREN :</strong> {{ data.siren }}</div>
+                        <div><strong>PDL/PCE :</strong> <span style="font-family: monospace; color: #0d6efd;">{{ data.pdl }}</span></div>
+                        <div><strong>Segment :</strong> <span style="background: #0d6efd; color: white; padding: 2px 8px; border-radius: 4px; font-weight: 600;">{{ data.segment }}</span></div>
+                        <div><strong>Puissance :</strong> {{ data.puissance }}</div>
+                        <div style="grid-column: 1 / -1;"><strong>Adresse consommation :</strong> {{ data.adresse_consommation or data.adresse_siege }}</div>
+                    </div>
+                </div>
+
+                <!-- INFORMATIONS GÉRANT -->
+                <div>
+                    <h3 style="color: #28a745; font-size: 1.1em; margin-bottom: 10px; border-bottom: 2px solid #e9ecef; padding-bottom: 5px;">
+                        👤 INFORMATIONS GÉRANT
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 0.95em;">
+                        <div><strong>Civilité :</strong> {{ data.civilite }}</div>
+                        <div><strong>Nom :</strong> {{ data.nom_gerant or data.signataire_nom }}</div>
+                        <div><strong>Email :</strong> <a href="mailto:{{ data.email }}" style="color: #0d6efd;">{{ data.email }}</a></div>
+                        <div><strong>Téléphone :</strong> <a href="tel:{{ data.telephone }}" style="color: #0d6efd;">{{ data.telephone }}</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. DATES DE FOURNITURE -->
+            <div class="form-section">
+                <h2 class="section-title">📅 3. Dates de Fourniture</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Date de Début</label>
+                        <input type="date" name="date_debut" id="dateDebut" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date de Fin</label>
+                        <input type="date" name="date_fin" id="dateFin" class="form-input" required>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary" id="btnCalculerPrixP0" style="margin-top: 15px;">
+                    🔍 Calculer les Prix P0
+                </button>
+            </div>
+
+            <!-- 4. CONSOMMATIONS -->
+            <div class="form-section">
+                <h2 class="section-title">⚡ 4. Consommation Annuelle de Référence (CAR)</h2>
+                <div id="consoFields"></div>
+                <div id="consoTotal" style="background: #d4edda; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #28a745;">
+                    <strong>📊 CAR Totale :</strong> <span id="currentTotal" style="font-size: 1.3em; color: #28a745; font-weight: 600;">0.00</span> MWh/an
+                </div>
+            </div>
+
+            <!-- 5. PRIX ET MARGES -->
+            <div class="form-section" id="prixSection" style="display: none;">
+                <h2 class="section-title">💰 5. Prix P0 & Marges Commerciales</h2>
+
+                <div id="dureeContrat" style="background: #e7f3ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #0066cc;">
+                    <strong>📅 Durée du contrat :</strong> <span id="dureeContratValue">0</span> mois
+                </div>
+
+                <table class="prix-table" id="tablePrix">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Prix P0<br><small>(€/MWh)</small></th>
+                            <th>Marge<br><small>(€/MWh)</small></th>
+                            <th>Prix Final<br><small>(€/MWh)</small></th>
+                            <th>Consommation<br><small>(MWh)</small></th>
+                            <th>Gain Courtier<br><small>(€)</small></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablePrixBody">
+                    </tbody>
+                </table>
+
+                <div class="gain-total" id="gainTotal">
+                    <div class="gain-total-label">💵 GAIN COURTIER TOTAL</div>
+                    <div class="gain-total-value"><span id="gainTotalValue">0</span> €</div>
+                </div>
+
+                <div class="form-group" style="margin-top: 30px;">
+                    <label class="form-label">Prix Abonnement Annuel (€/an)</label>
+                    <input type="number" step="0.01" name="prix_abonnement" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Prix Capacité (€/MWh)</label>
+                    <input type="number" step="0.01" name="prix_capacite" id="prixCapacite" class="form-input" required>
+                </div>
+            </div>
+
+            <!-- 5. AUTRES INFORMATIONS -->
+            <div class="form-section">
+                <h2 class="section-title">📋 5. Autres Informations</h2>
+
+                <div class="form-group">
+                    <label class="form-label">Garanties d'Origine</label>
+                    <select name="go_souhaite" class="form-input">
+                        <option value="non">Non</option>
+                        <option value="oui">Oui (25%)</option>
+                        <option value="oui">Oui (50%)</option>
+                        <option value="oui">Oui (100%)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">CEE (Certificats d'Économies d'Énergie)</label>
+                    <select name="cee" class="form-input">
+                        <option value="non_soumis">Non Soumis</option>
+                        <option value="soumis">Soumis</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Garantie de Paiement (€)</label>
+                    <input type="number" step="0.01" name="garantie_montant" class="form-input" value="0">
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">IBAN (optionnel)</label>
+                        <input type="text" name="iban" class="form-input" placeholder="FR76...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">BIC (optionnel)</label>
+                        <input type="text" name="bic" class="form-input" placeholder="XXXXXXXX">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn" style="width: 100%;">Générer le CPV 🚀</button>
+        </form>
+    </div>
+
+    <script>
+        const segment = "{{ segment }}";
+        const volumeTotal = parseFloat("{{ data.volume_total }}".replace(',', '.'));
+        const sessionId = "{{ session_id }}";
+
+        let prixP0Data = null;
+        let consommations = {};
+        let dureeMois = 0;
+
+        // Générer les champs de consommation selon le segment
+        function generateConsoFields() {
+            let html = '<div class="form-grid">';
+            const postes = getPostesForSegment(segment);
+
+            postes.forEach(poste => {
+                html += `
+                    <div class="form-group">
+                        <label class="form-label">${poste.label} (MWh)</label>
+                        <input type="number" step="0.01" name="conso_${poste.key}"
+                               id="conso_${poste.key}" class="form-input conso-input" required>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            document.getElementById('consoFields').innerHTML = html;
+
+            // Ajouter listeners pour calcul du total
+            document.querySelectorAll('.conso-input').forEach(input => {
+                input.addEventListener('input', updateConsoTotal);
+            });
+        }
+
+        function getPostesForSegment(seg) {
+            if (seg === 'C2') {
+                return [
+                    {key: 'pte', label: 'PTE - Pointe'},
+                    {key: 'hph', label: 'HPH - Heures Pleines Hiver'},
+                    {key: 'hch', label: 'HCH - Heures Creuses Hiver'},
+                    {key: 'hpe', label: 'HPE - Heures Pleines Été'},
+                    {key: 'hce', label: 'HCE - Heures Creuses Été'}
+                ];
+            } else if (seg === 'C4') {
+                return [
+                    {key: 'hph', label: 'HPH - Heures Pleines Hiver'},
+                    {key: 'hch', label: 'HCH - Heures Creuses Hiver'},
+                    {key: 'hpe', label: 'HPE - Heures Pleines Été'},
+                    {key: 'hce', label: 'HCE - Heures Creuses Été'}
+                ];
+            } else { // C5
+                return [
+                    {key: 'base', label: 'BASE - Consommation totale'}
+                ];
+            }
+        }
+
+        function updateConsoTotal() {
+            let total = 0;
+            consommations = {};
+
+            document.querySelectorAll('.conso-input').forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                total += value;
+                const key = input.name.replace('conso_', '');
+                consommations[key] = value;
+            });
+
+            // Afficher simplement le total CAR
+            document.getElementById('currentTotal').textContent = total.toFixed(2);
+
+            // Mettre à jour le tableau si les prix sont déjà calculés
+            if (prixP0Data) {
+                updateTablePrix();
+            }
+        }
+
+        // Calculer les Prix P0
+        document.getElementById('btnCalculerPrixP0').addEventListener('click', async () => {
+            const dateDebut = document.getElementById('dateDebut').value;
+            const dateFin = document.getElementById('dateFin').value;
+
+            if (!dateDebut || !dateFin) {
+                alert('Veuillez sélectionner les dates de début et de fin');
+                return;
+            }
+
+            try {
+                const formatDate = (dateStr) => {
+                    const [y, m, d] = dateStr.split('-');
+                    return `${d}/${m}/${y}`;
+                };
+
+                const response = await fetch('/api/get_prix_p0', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        segment: segment,
+                        date_debut: formatDate(dateDebut),
+                        date_fin: formatDate(dateFin)
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    prixP0Data = result.prix_p0;
+
+                    // Stocker la durée en mois
+                    dureeMois = parseInt(prixP0Data.duree_mois) || 0;
+
+                    // Afficher la durée du contrat
+                    document.getElementById('dureeContratValue').textContent = dureeMois;
+
+                    // Remplir le prix capacité
+                    if (prixP0Data.prix_capa_2026) {
+                        document.getElementById('prixCapacite').value = prixP0Data.prix_capa_2026;
+                    }
+
+                    // Afficher la section prix
+                    document.getElementById('prixSection').style.display = 'block';
+
+                    // Générer le tableau
+                    updateTablePrix();
+
+                    alert(`✅ Prix P0 récupérés avec succès !\nDurée du contrat : ${dureeMois} mois (${(dureeMois/12).toFixed(1)} ans)`);
+                } else {
+                    alert('❌ ' + result.error);
+                }
+            } catch (error) {
+                console.error(error);
+                alert('❌ Erreur: ' + error.message);
+            }
+        });
+
+        function updateTablePrix() {
+            if (!prixP0Data) return;
+
+            const postes = getPostesForSegment(segment);
+            let html = '';
+            let gainTotal = 0;
+
+            postes.forEach(poste => {
+                const prixP0Key = `prix_${poste.key}`;
+                const prixP0 = parseFloat(prixP0Data[prixP0Key] || 0);
+                const conso = consommations[poste.key] || 0;
+
+                html += `
+                    <tr data-poste="${poste.key}">
+                        <td><strong>${poste.key.toUpperCase()}</strong></td>
+                        <td>${prixP0.toFixed(2)}</td>
+                        <td>
+                            <input type="number" step="0.01" min="0" max="50"
+                                   class="marge-input" data-poste="${poste.key}"
+                                   value="0" placeholder="0.00">
+                        </td>
+                        <td class="prix-final">0.00</td>
+                        <td>${conso.toFixed(2)}</td>
+                        <td class="gain-courtier">0.00</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('tablePrixBody').innerHTML = html;
+
+            // Ajouter les listeners sur les inputs de marge
+            document.querySelectorAll('.marge-input').forEach(input => {
+                input.addEventListener('input', (e) => {
+                    const poste = e.target.dataset.poste;
+                    const row = e.target.closest('tr');
+                    const prixP0 = parseFloat(row.cells[1].textContent);
+                    const marge = parseFloat(e.target.value) || 0;
+                    const prixFinal = prixP0 + marge;
+                    const consoAnnuelle = parseFloat(row.cells[4].textContent);
+
+                    // NOUVELLE FORMULE : (Conso annuelle / 12) × Durée mois × Marge / 2
+                    const gain = (consoAnnuelle / 12) * dureeMois * marge / 2;
+
+                    // Mettre à jour le prix final
+                    row.cells[3].textContent = prixFinal.toFixed(2);
+
+                    // Mettre à jour le gain courtier
+                    row.cells[5].textContent = gain.toFixed(2);
+
+                    // Mettre à jour le champ de prix caché pour le formulaire
+                    let hiddenInput = document.querySelector(`input[name="prix_${poste}"]`);
+                    if (!hiddenInput) {
+                        hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = `prix_${poste}`;
+                        document.getElementById('cpvForm').appendChild(hiddenInput);
+                    }
+                    hiddenInput.value = prixFinal.toFixed(2);
+
+                    // Recalculer le gain total
+                    calculerGainTotal();
+                });
+            });
+        }
+
+        function calculerGainTotal() {
+            let total = 0;
+            document.querySelectorAll('.gain-courtier').forEach(cell => {
+                total += parseFloat(cell.textContent) || 0;
+            });
+            document.getElementById('gainTotalValue').textContent = total.toFixed(0);
+        }
+
+        // Initialisation
+        generateConsoFields();
+
+        // Soumission du formulaire
+        document.getElementById('cpvForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+
+            try {
+                const response = await fetch(`/generate/${sessionId}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('alerts').innerHTML = `
+                        <div class="alert alert-success">
+                            ✅ CPV généré avec succès !<br>
+                            <a href="${result.download_url}" style="color: #155724; text-decoration: underline;">
+                                📥 Télécharger ${result.filename}
+                            </a>
+                        </div>
+                    `;
+                    window.scrollTo(0, 0);
+                } else {
+                    throw new Error(result.error || 'Erreur inconnue');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('alerts').innerHTML = `
+                    <div class="alert alert-error">❌ Erreur: ${error.message}</div>
+                `;
+                window.scrollTo(0, 0);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire CPV - {{ data.raison_sociale }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .client-info {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .segment-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1.2em;
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+        }
+
+        .consumption-total {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .consumption-total strong {
+            color: #856404;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .alert-error {
+            background: #fee;
+            color: #c00;
+            border-left: 4px solid #c00;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 Formulaire de Saisie CPV</h1>
+        </div>
+
+        <div class="client-info">
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Raison Sociale</span>
+                    <span class="info-value">{{ data.raison_sociale }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Segment</span>
+                    <span class="segment-badge">{{ segment }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Volume Total</span>
+                    <span class="info-value">{{ data.volume_total }} MWh</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Score</span>
+                    <span class="info-value">{{ data.score }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="alerts"></div>
+
+        <form id="cpvForm">
+            <input type="hidden" name="segment" value="{{ segment }}">
+            <input type="hidden" name="volume_total" value="{{ data.volume_total }}">
+
+            <!-- INFORMATIONS JURIDIQUES -->
+            <div class="form-section">
+                <h2 class="section-title">🏢 Informations Juridiques</h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Capital Social (€)</label>
+                        <input type="text" name="capital_social" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Fonction du Signataire</label>
+                        <input type="text" name="fonction_signataire" class="form-input"
+                               placeholder="Ex: Président, Gérant, Directeur..." required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DATES DE FOURNITURE ET PRIX -->
+            <div class="form-section">
+                <h2 class="section-title">📅 Dates de Fourniture & Calcul Automatique des Prix</h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Date de Début</label>
+                        <input type="date" name="date_debut" id="dateDebut" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Date de Fin</label>
+                        <input type="date" name="date_fin" id="dateFin" class="form-input" required>
+                    </div>
+                </div>
+
+                <button type="button" class="btn" id="btnCalculerPrixP0" style="margin-bottom: 20px;">
+                    🔍 Calculer les Prix P0 Automatiquement
+                </button>
+
+                <div id="prixP0Result" style="display: none; background: #e7f3ff; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 style="color: #0066cc; margin-bottom: 15px;">💰 Prix P0 (sans marge)</h3>
+                    <div id="prixP0Details"></div>
+                </div>
+
+                <div id="margeSection" style="display: none; background: #fff3cd; padding: 20px; border-radius: 10px; border-left: 4px solid #ffc107;">
+                    <h3 style="color: #856404; margin-bottom: 15px;">📊 Gestion de la Marge Commerciale</h3>
+
+                    <div class="form-group">
+                        <label class="form-label">Marge Commerciale Totale (€/MWh) - Max 25€</label>
+                        <input type="range" id="margeSlider" class="form-input" value="0" min="0" max="25" step="0.5" style="width: 100%;">
+                        <div style="display: flex; justify-content: space-between; margin-top: 5px; font-size: 0.9em; color: #666;">
+                            <span>0 €</span>
+                            <span style="font-weight: 600; font-size: 1.2em; color: #856404;"><span id="margeValue">0.00</span> €/MWh</span>
+                            <span>25 €</span>
+                        </div>
+                    </div>
+
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <div style="font-size: 0.85em; color: #666;">Part MINT (Fournisseur)</div>
+                            <div style="font-size: 1.2em; font-weight: 600; color: #667eea;"><span id="margeMint">0.00</span> €/MWh</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.85em; color: #666;">Part Courtier (Vous)</div>
+                            <div style="font-size: 1.2em; font-weight: 600; color: #28a745;"><span id="margeCourtierDisplay">0.00</span> €/MWh</div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn" id="btnAppliquerMarge" style="margin-top: 15px;">
+                        ✅ Appliquer la Marge
+                    </button>
+
+                    <div id="gainCourtierTotal" style="display: none; background: #d4edda; padding: 20px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #28a745;">
+                        <h4 style="color: #155724; margin-bottom: 15px;">💰 Votre Gain Courtier sur ce Contrat</h4>
+                        <div style="background: white; padding: 20px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">Gain Total</div>
+                            <div style="font-size: 2.5em; font-weight: 700; color: #28a745;"><span id="gainTotalValue">0</span> €</div>
+                            <div style="font-size: 0.85em; color: #666; margin-top: 10px;">
+                                Basé sur <span id="consoTotale">0</span> MWh × <span id="margeCourtierValue">0</span> €/MWh
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OPTION C5 -->
+            {% if segment == 'C5' %}
+            <div class="form-section">
+                <h2 class="section-title">⚙️ Option Tarifaire C5</h2>
+                <div class="form-group">
+                    <label class="form-label">Choisir l'option :</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="c5_option" value="base" id="optionBase" checked>
+                            <label for="optionBase">BASE (1 prix unique)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="c5_option" value="hphc" id="optionHPHC">
+                            <label for="optionHPHC">HP/HC (2 prix)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- CONSOMMATION -->
+            <div class="form-section">
+                <h2 class="section-title">⚡ Répartition de la Consommation</h2>
+
+                <div id="consoFields">
+                    <!-- Les champs seront générés dynamiquement -->
+                </div>
+
+                <div class="consumption-total">
+                    <strong>Total à atteindre : {{ data.volume_total }} MWh</strong>
+                    <div id="currentTotal" style="margin-top: 10px;"></div>
+                </div>
+            </div>
+
+            <!-- PRIX -->
+            <div class="form-section">
+                <h2 class="section-title">💰 Données Tarifaires</h2>
+
+                <div class="form-group">
+                    <label class="form-label">Prix Abonnement Annuel (€/an)</label>
+                    <input type="number" step="0.01" name="prix_abonnement" class="form-input" required>
+                </div>
+
+                <div id="prixFields">
+                    <!-- Les champs seront générés dynamiquement -->
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Prix Capacité (€/MWh)</label>
+                    <input type="number" step="0.01" name="prix_capacite" class="form-input" required>
+                </div>
+            </div>
+
+            <!-- GARANTIES D'ORIGINE -->
+            <div class="form-section">
+                <h2 class="section-title">🌱 Garanties d'Origine</h2>
+
+                <div class="form-group">
+                    <label class="form-label">Souhaitez-vous des Garanties d'Origine ?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="go_souhaite" value="non" id="goNon" checked>
+                            <label for="goNon">Non</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="go_souhaite" value="oui" id="goOui">
+                            <label for="goOui">Oui</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="goPercentage" class="form-group hidden">
+                    <label class="form-label">Pourcentage de couverture :</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="go_percentage" value="25">
+                            <label>25%</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="go_percentage" value="50">
+                            <label>50%</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="go_percentage" value="100">
+                            <label>100%</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CEE -->
+            <div class="form-section">
+                <h2 class="section-title">📜 Certificats d'Économies d'Énergie (CEE)</h2>
+
+                <div class="form-group">
+                    <label class="form-label">Client soumis aux CEE ?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="cee" value="non_soumis" id="ceeNon" checked>
+                            <label for="ceeNon">Non Soumis</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="cee" value="soumis" id="ceeOui">
+                            <label for="ceeOui">Soumis</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GARANTIE -->
+            <div class="form-section">
+                <h2 class="section-title">🔒 Garantie de Paiement</h2>
+
+                <div class="form-group">
+                    <label class="form-label">Montant de la garantie (€)</label>
+                    <input type="number" step="0.01" name="garantie_montant" class="form-input"
+                           value="0" required>
+                </div>
+            </div>
+
+            <!-- COORDONNÉES BANCAIRES -->
+            <div class="form-section">
+                <h2 class="section-title">🏦 Coordonnées Bancaires (Mandat SEPA)</h2>
+
+                <div class="form-group">
+                    <label class="form-label">IBAN (optionnel)</label>
+                    <input type="text" name="iban" class="form-input"
+                           placeholder="FR76 XXXX XXXX XXXX XXXX XXXX XXX">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">BIC (optionnel)</label>
+                    <input type="text" name="bic" class="form-input"
+                           placeholder="XXXXXXXX">
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Générer le CPV 🚀</button>
+        </form>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Génération du CPV en cours...</p>
+        </div>
+    </div>
+
+    <script>
+        const segment = "{{ segment }}";
+        const volumeTotal = parseFloat("{{ data.volume_total }}".replace(',', '.'));
+        const sessionId = "{{ session_id }}";
+
+        // Variables globales pour les prix
+        let prixP0Data = null;
+        let prixFinauxData = null;
+
+        // ========== CALCUL AUTOMATIQUE DES PRIX P0 ==========
+        document.getElementById('btnCalculerPrixP0')?.addEventListener('click', async () => {
+            const dateDebut = document.getElementById('dateDebut').value;
+            const dateFin = document.getElementById('dateFin').value;
+
+            if (!dateDebut || !dateFin) {
+                alert('Veuillez sélectionner les dates de début et de fin');
+                return;
+            }
+
+            try {
+                // Convertir au format JJ/MM/AAAA
+                const formatDate = (dateStr) => {
+                    const [y, m, d] = dateStr.split('-');
+                    return `${d}/${m}/${y}`;
+                };
+
+                const response = await fetch('/api/get_prix_p0', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        segment: segment,
+                        date_debut: formatDate(dateDebut),
+                        date_fin: formatDate(dateFin)
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    prixP0Data = result.prix_p0;
+                    afficherPrixP0(prixP0Data);
+                    document.getElementById('prixP0Result').style.display = 'block';
+                    document.getElementById('margeSection').style.display = 'block';
+                } else {
+                    alert('❌ ' + result.error);
+                }
+            } catch (error) {
+                console.error(error);
+                alert('❌ Erreur: ' + error.message);
+            }
+        });
+
+        function afficherPrixP0(prix) {
+            let html = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">';
+
+            for (const [key, value] of Object.entries(prix)) {
+                if (key.startsWith('prix_') && !key.endsWith('_2025') && !key.endsWith('_2026')) {
+                    const label = key.replace('prix_', '').toUpperCase();
+                    html += `
+                        <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #0066cc;">
+                            <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">${label}</div>
+                            <div style="font-size: 1.3em; font-weight: 600; color: #0066cc;">${value} €/MWh</div>
+                        </div>
+                    `;
+                }
+            }
+
+            // Afficher capacité si présente
+            if (prix.prix_capa_2026) {
+                html += `
+                    <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #28a745;">
+                        <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">CAPACITÉ 2026</div>
+                        <div style="font-size: 1.3em; font-weight: 600; color: #28a745;">${prix.prix_capa_2026} €/MWh</div>
+                    </div>
+                `;
+            }
+
+            html += '</div>';
+            document.getElementById('prixP0Details').innerHTML = html;
+        }
+
+        // ========== GESTION DU SLIDER DE MARGE ==========
+        const margeSlider = document.getElementById('margeSlider');
+
+        margeSlider?.addEventListener('input', (e) => {
+            const margeTotal = parseFloat(e.target.value);
+            const margeMint = margeTotal / 2;
+            const margeCourtier = margeTotal / 2;
+
+            document.getElementById('margeValue').textContent = margeTotal.toFixed(2);
+            document.getElementById('margeMint').textContent = margeMint.toFixed(2);
+            document.getElementById('margeCourtierDisplay').textContent = margeCourtier.toFixed(2);
+        });
+
+        document.getElementById('btnAppliquerMarge')?.addEventListener('click', async () => {
+            if (!prixP0Data) {
+                alert('Veuillez d\'abord calculer les prix P0');
+                return;
+            }
+
+            const margeTotal = parseFloat(margeSlider.value);
+            const margeFourn = margeTotal / 2;
+            const margeCourtier = margeTotal / 2;
+
+            try {
+                const response = await fetch('/api/calculer_prix_avec_marge', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        prix_p0: prixP0Data,
+                        marge_fournisseur: margeFourn,
+                        marge_courtier: margeCourtier
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    prixFinauxData = result;
+                    remplirChampsPrix(result.prix_finaux);
+
+                    // Calculer le gain courtier total
+                    calculerGainCourtierTotal(margeCourtier);
+
+                    document.getElementById('gainCourtierTotal').style.display = 'block';
+                } else {
+                    alert('❌ ' + result.error);
+                }
+            } catch (error) {
+                console.error(error);
+                alert('❌ Erreur: ' + error.message);
+            }
+        });
+
+        function calculerGainCourtierTotal(margeCourtier) {
+            // Récupérer la consommation totale depuis le volume_total
+            const consoTotale = volumeTotal;
+            const gainTotal = consoTotale * margeCourtier;
+
+            document.getElementById('consoTotale').textContent = consoTotale.toFixed(2);
+            document.getElementById('margeCourtierValue').textContent = margeCourtier.toFixed(2);
+            document.getElementById('gainTotalValue').textContent = gainTotal.toFixed(0);
+        }
+
+        function afficherCommission(result) {
+            const commission = result.commission;
+            const margeCourtier = result.marge_courtier;
+
+            let html = `
+                <div style="margin-bottom: 15px;">
+                    <strong>Marge courtier appliquée:</strong> ${margeCourtier} €/MWh
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+            `;
+
+            for (const [key, value] of Object.entries(commission)) {
+                if (key.startsWith('prix_')) {
+                    const label = key.replace('prix_', '').toUpperCase();
+                    html += `
+                        <div style="background: #f8f9fa; padding: 10px; border-radius: 5px;">
+                            <div style="font-size: 0.85em; color: #666;">${label}</div>
+                            <div style="font-size: 1.1em; font-weight: 600; color: #155724;">${value} €/MWh</div>
+                        </div>
+                    `;
+                }
+            }
+
+            html += '</div>';
+            document.getElementById('commissionDetails').innerHTML = html;
+        }
+
+        function remplirChampsPrix(prixFinaux) {
+            // Remplir automatiquement les champs de prix dans le formulaire
+            for (const [key, value] of Object.entries(prixFinaux)) {
+                if (key.startsWith('prix_')) {
+                    const inputName = key; // ex: prix_hph
+                    const input = document.querySelector(`input[name="${inputName}"]`);
+                    if (input) {
+                        input.value = value;
+                    }
+                }
+            }
+
+            // Prix capacité
+            if (prixFinaux.prix_capa_2026) {
+                const inputCapa = document.querySelector('input[name="prix_capacite"]');
+                if (inputCapa) {
+                    inputCapa.value = prixFinaux.prix_capa_2026;
+                }
+            }
+        }
+
+        // Gestion des Garanties d'Origine
+        document.querySelectorAll('input[name="go_souhaite"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                document.getElementById('goPercentage').classList.toggle('hidden', e.target.value === 'non');
+            });
+        });
+
+        // Génération dynamique des champs selon le segment
+        function generateFields() {
+            const c5Option = document.querySelector('input[name="c5_option"]:checked')?.value;
+
+            let consoHTML = '';
+            let prixHTML = '';
+
+            if (segment === 'C2') {
+                // 5 postes
+                const postes = ['PTE', 'HPH', 'HCH', 'HPE', 'HCE'];
+                const labels = {
+                    'PTE': 'Pointe',
+                    'HPH': 'Heures Pleines Hiver',
+                    'HCH': 'Heures Creuses Hiver',
+                    'HPE': 'Heures Pleines Été',
+                    'HCE': 'Heures Creuses Été'
+                };
+
+                consoHTML = '<div class="form-grid">';
+                prixHTML = '<div class="form-grid">';
+
+                postes.forEach(poste => {
+                    consoHTML += `
+                        <div class="form-group">
+                            <label class="form-label">${poste} - ${labels[poste]} (MWh)</label>
+                            <input type="number" step="0.01" name="conso_${poste.toLowerCase()}"
+                                   class="form-input conso-input" required>
+                        </div>
+                    `;
+                    prixHTML += `
+                        <div class="form-group">
+                            <label class="form-label">Prix ${poste} (€/MWh)</label>
+                            <input type="number" step="0.01" name="prix_${poste.toLowerCase()}"
+                                   class="form-input" required>
+                        </div>
+                    `;
+                });
+
+                consoHTML += '</div>';
+                prixHTML += '</div>';
+
+            } else if (segment === 'C4') {
+                // 4 postes (pas de PTE)
+                const postes = ['HPH', 'HCH', 'HPE', 'HCE'];
+                const labels = {
+                    'HPH': 'Heures Pleines Hiver',
+                    'HCH': 'Heures Creuses Hiver',
+                    'HPE': 'Heures Pleines Été',
+                    'HCE': 'Heures Creuses Été'
+                };
+
+                consoHTML = '<div class="form-grid">';
+                prixHTML = '<div class="form-grid">';
+
+                postes.forEach(poste => {
+                    consoHTML += `
+                        <div class="form-group">
+                            <label class="form-label">${poste} - ${labels[poste]} (MWh)</label>
+                            <input type="number" step="0.01" name="conso_${poste.toLowerCase()}"
+                                   class="form-input conso-input" required>
+                        </div>
+                    `;
+                    prixHTML += `
+                        <div class="form-group">
+                            <label class="form-label">Prix ${poste} (€/MWh)</label>
+                            <input type="number" step="0.01" name="prix_${poste.toLowerCase()}"
+                                   class="form-input" required>
+                        </div>
+                    `;
+                });
+
+                consoHTML += '</div>';
+                prixHTML += '</div>';
+
+            } else if (segment === 'C5') {
+                if (c5Option === 'base') {
+                    consoHTML = `
+                        <div class="form-group">
+                            <label class="form-label">BASE - Consommation totale (MWh)</label>
+                            <input type="number" step="0.01" name="conso_base"
+                                   class="form-input conso-input" value="${volumeTotal}" required>
+                        </div>
+                    `;
+                    prixHTML = `
+                        <div class="form-group">
+                            <label class="form-label">Prix BASE (€/MWh)</label>
+                            <input type="number" step="0.01" name="prix_base"
+                                   class="form-input" required>
+                        </div>
+                    `;
+                } else {
+                    consoHTML = `
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">HP - Heures Pleines (MWh)</label>
+                                <input type="number" step="0.01" name="conso_hp"
+                                       class="form-input conso-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">HC - Heures Creuses (MWh)</label>
+                                <input type="number" step="0.01" name="conso_hc"
+                                       class="form-input conso-input" required>
+                            </div>
+                        </div>
+                    `;
+                    prixHTML = `
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Prix HP (€/MWh)</label>
+                                <input type="number" step="0.01" name="prix_hp"
+                                       class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Prix HC (€/MWh)</label>
+                                <input type="number" step="0.01" name="prix_hc"
+                                       class="form-input" required>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            document.getElementById('consoFields').innerHTML = consoHTML;
+            document.getElementById('prixFields').innerHTML = prixHTML;
+
+            // Ajouter les listeners pour le calcul du total
+            document.querySelectorAll('.conso-input').forEach(input => {
+                input.addEventListener('input', updateTotal);
+            });
+        }
+
+        function updateTotal() {
+            const inputs = document.querySelectorAll('.conso-input');
+            let total = 0;
+            inputs.forEach(input => {
+                total += parseFloat(input.value) || 0;
+            });
+
+            const diff = total - volumeTotal;
+            const diffText = diff === 0 ? '✅ Parfait !' :
+                           diff > 0 ? `⚠️ Excédent: +${diff.toFixed(2)} MWh` :
+                           `⚠️ Manquant: ${diff.toFixed(2)} MWh`;
+
+            document.getElementById('currentTotal').innerHTML = `
+                <strong>Total saisi: ${total.toFixed(2)} MWh</strong> - ${diffText}
+            `;
+        }
+
+        // C5: Regénérer les champs si l'option change
+        if (segment === 'C5') {
+            document.querySelectorAll('input[name="c5_option"]').forEach(radio => {
+                radio.addEventListener('change', generateFields);
+            });
+        }
+
+        // Initialisation
+        generateFields();
+
+        // Soumission du formulaire
+        document.getElementById('cpvForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+
+            document.getElementById('loading').style.display = 'block';
+            e.target.style.display = 'none';
+
+            try {
+                const response = await fetch(`/generate/${sessionId}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('alerts').innerHTML = `
+                        <div class="alert alert-success">
+                            ✅ CPV généré avec succès !<br>
+                            <a href="${result.download_url}" style="color: #155724; text-decoration: underline;">
+                                📥 Télécharger ${result.filename}
+                            </a>
+                        </div>
+                    `;
+                    document.getElementById('loading').style.display = 'none';
+                } else {
+                    throw new Error(result.error || 'Erreur inconnue');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('alerts').innerHTML = `
+                    <div class="alert alert-error">❌ Erreur: ${error.message}</div>
+                `;
+                document.getElementById('loading').style.display = 'none';
+                e.target.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
